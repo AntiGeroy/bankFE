@@ -238,12 +238,14 @@ const GridTableBody: React.FC<GridTableBodyComponentProps> = (props) => {
 
 
 const formatValue = (value: any, valueType: VALUETYPE, contentType: CONTENTTYPE) => {
+
     if (value === undefined) {
         return "-"
     }
     if (contentType === CONTENTTYPE.URL) {
+        console.error("Rendering url with value + ", value);
         return (
-            <IconButton href={value} target="_blank" rel="noopener noreferrer" style={{padding: 0}} key={1}>
+            <IconButton onClick={() => window.open('http://localhost:8080' + value, '_blank')} style={{padding: 0}} key={1}>
                 <LinkIcon/>
             </IconButton>
         )

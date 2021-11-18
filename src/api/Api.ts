@@ -1,6 +1,5 @@
-import {GridConfig, SortCondition} from "../gridomizer/domain/GridConfig";
 import GridData, {GridDataRequest, SearchCondition} from "../gridomizer/domain/GridData";
-import ClientInfo, {Client} from "../components/clientInfo/ClientInfo";
+import {Address, Client, File} from "../Types";
 
 const axios = require('axios').default;
 
@@ -41,10 +40,26 @@ class Api {
     };
 
     public static updateClientData = (request : Client) : Promise<any> => {
-        console.error("API : ", request);
         return instance.put('api/klienti/' + request.clientId, request);
     };
 
+    public static createNewAddress = (request : Address) : Promise<any> => {
+        return instance.post('api/adresy/novy', request);
+    };
+
+    public static saveNewDocument = (request : File, fileData : any) : Promise<any> => {
+
+        const formData = new FormData();
+        console.error("SENDING DATA : ", fileData);
+        formData.append('file', fileData);
+        formData.append('name', request.name ? request.name : '');
+        formData.append('clientId', request.clientId ? String(request.clientId) : '');
+        formData.append('typeId', request.type ? String(request.type) : '');
+
+        const config = {headers: {'content-type': 'multipart/form-data'}};
+
+        return instance.post('api/dokumenty/novy', formData, config);
+    }
 }
 
 export default Api;
