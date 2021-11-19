@@ -8,13 +8,16 @@ const instance = axios.create({
     baseURL: 'http://localhost:8080',
 });
 
-
 export interface FetchGridRequest {
     gridName : string
 }
 
 export interface FetchUserRequest {
     clientId : string
+}
+
+export interface FetchAddressRequest {
+    addressId : string
 }
 
 /*export interface FetchGridDataRequest {
@@ -24,7 +27,6 @@ export interface FetchUserRequest {
     searchConditions : SearchCondition[]
     sortConditions : SortCondition[]
 }*/
-
 
 class Api {
 
@@ -45,6 +47,9 @@ class Api {
         return instance.put('api/klienti/' + request.clientId, request);
     };
 
+    public static fetchAddressData = (request : FetchAddressRequest) : Promise<any> => {
+        return instance.get('api/adresy/' + request.addressId);
+    };
 }
 
 export default Api;

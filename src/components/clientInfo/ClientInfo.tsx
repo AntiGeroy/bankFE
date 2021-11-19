@@ -527,9 +527,10 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
 
         const addressSearchConditions : SearchCondition[] = [];
 
-        const idAddresssearchCondition : SearchCondition = {searchType : SEARCHTYPE.EQUALS, fieldName : "clientId", value1 : this.props.match.params.clientID};
+        const idAddressSearchCondition : SearchCondition = {searchType : SEARCHTYPE.EQUALS,
+            fieldName : "clientId", value1 : this.props.match.params.clientID};
 
-        addressSearchConditions.push(idAddresssearchCondition);
+        addressSearchConditions.push(idAddressSearchCondition);
 
         const accountSearchConditions : SearchCondition[] = [];
 
@@ -537,7 +538,7 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
 
         accountSearchConditions.push(idAcoountSearchCondition);
 
-        addressSearchConditions.push(idAddresssearchCondition);
+        addressSearchConditions.push(idAddressSearchCondition);
 
         if (this.state.loading){
             return <CircularProgress />;
@@ -545,14 +546,13 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
 
         const client : any  = this.state.client;
 
-
         return (
             <div className='clientInfo'>
                 {this.state.message ? <MessageBox message={this.state.message.message} type={this.state.message.type} onClose={this.onCloseMessageBox}/> : null}
                 <ClientInfoCard id={client?.id} name={client?.name} surname={client?.surname} birthNumber={client?.birthNumber} phoneNumber={client?.phoneNumber}/>
                 {this.renderButtons()}
                 <div className='separator'/>
-                <RoutableGrid gridName='Addresses' searchConditions={addressSearchConditions}/>
+                <RoutableGrid gridName='Addresses' searchConditions={addressSearchConditions} linkToRoute='../addresses/'/>
                 <div className='separator'/>
                 <RoutableGrid gridName='Accounts' searchConditions={accountSearchConditions}/>
                 <ChangeClientDataDialog open={this.state.showChangeDataDialog} handleClose={this.closeChangeClientDataDialog} client={client}
@@ -563,7 +563,6 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
             </div>
         );
     }
-
 
 }
 
