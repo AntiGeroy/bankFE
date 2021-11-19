@@ -3,11 +3,11 @@ import Api from "../../api/Api";
 import {CircularProgress} from "@material-ui/core";
 import MessageBox from "../messageBox/MessageBox";
 import Button from "@material-ui/core/Button";
-import {Address} from "../clientInfo/ClientInfo";
 import AddressInfoCard from "../addrressInfoCard/AddressInfoCard";
 import RoutableGrid from "../routableGrid/RoutableGrid";
 import {SearchCondition} from "../../gridomizer/domain/GridData";
 import {SEARCHTYPE} from "../../gridomizer/domain/GridConfig";
+import {Address} from "../../Types";
 
 interface AddressInfoProps{
     match : any
@@ -84,8 +84,7 @@ class AddressInfo extends React.Component<AddressInfoProps, AddressInfoState>{
                 {this.renderButtons()}
                 <div className='separator'/>
 
-                <RoutableGrid gridName='ClientAddresses' searchConditions={addressClientSearchConditions} />
-
+                <RoutableGrid gridName='ClientAddresses' searchConditions={addressClientSearchConditions} linkToRoute={'clients/' + this.state.address?.clientId}/>
             </div>
         );
     }

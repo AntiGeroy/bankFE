@@ -50,7 +50,7 @@ function App() {
                     <Grid item xs={9}>
                         <Switch>
                             <Route path={'/klienti'} exact render={() => <RoutableGrid key='clientsGrid' gridName={'Clients'} linkToRoute='clients/'/>}/>
-                            <Route path={'/ucty'} exact render={() => <RoutableGrid key='accountGrid' gridName={'Accounts'} linkToRoute='accounts/'/>}/>
+                            <Route path={'/ucty'} exact render={() => <RoutableGrid key='accountGrid' gridName={'Accounts'} linkToRoute='ucty/'/>}/>
                             <Route path={'/karty'} exact render={() => <RoutableGrid key='kartyGrid' gridName={'Cards'} linkToRoute='cards/'/>}/>
                             <Route path={'/klientiSort'} exact render={() => <RoutableGrid key='klientiSortGrid' gridName={'Clients'} searchConditions={clientSearchConditions}/>}/>
                             <Route path={'/clients/:clientID'} component={ClientInfo}/>
