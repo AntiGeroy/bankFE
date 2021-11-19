@@ -219,9 +219,11 @@ const GridTableCell: React.FC<GridTableBodyCellElementProps> = (props) => {
     </TableCell>
 }
 
+//Former link looked like this : to={props.linkTo + props.elementKey}
+
 const GridTableRow: React.FC<GridTableBodyRowElementProps> = (props: GridTableBodyRowElementProps & { children?: React.ReactNode | undefined }) => {
     if (props.linkTo){
-        return <TableRow hover role="checkbox" tabIndex={-1} key={props.elementKey} component={Link} to={props.linkTo + props.elementKey}>
+        return <TableRow hover role="checkbox" tabIndex={-1} key={props.elementKey} component={Link} to={{pathname : '/' + props.linkTo + props.elementKey}}>
             {props.children}
         </TableRow>
     }

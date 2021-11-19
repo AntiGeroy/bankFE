@@ -71,7 +71,6 @@ export default class Grid extends React.Component<Props, State> {
             this.fetchGridData(undefined, config.defaultSortConditions, undefined, undefined)
         } else if (functions.fetchGridConfigAsync) {
             functions.fetchGridConfigAsync().then(config => {
-                console.error(config)
                 const initialSearchConditions : SearchCondition[] | undefined = this.props.initialSearchConditions;
                 this.setState({gridConfig : config, sortConditions : config.defaultSortConditions, searchConditions : []})
                 this.fetchGridData(undefined, config.defaultSortConditions, config.defaultRowsCount, 0)
@@ -269,7 +268,6 @@ export default class Grid extends React.Component<Props, State> {
     render() {
         const elements = this.props.elements
         if (elements === undefined || elements?.grid === undefined || elements.grid.grid === undefined) {
-            console.error("NO GRID HERE");
             return (
                 <div>
                     {this.renderToolBar()}
@@ -277,7 +275,6 @@ export default class Grid extends React.Component<Props, State> {
                 </div>
             )
         } else {
-            console.error("GRID IS USED");
             return React.createElement(elements.grid.grid, {
                 style : elements.grid.style,
                 className : elements.grid.className,

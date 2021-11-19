@@ -22,3 +22,15 @@ export interface Address {
     postalCode? : string,
     countryCode? : string;
 }
+
+export interface Account {
+    accountNumber : number,
+    stateInfo : string,
+    clientId : number,
+    accountId : number,
+    remainder : number,
+    accountType : string,
+    limit? : number,
+    rate? : number,
+    timePeriod? : string
+}

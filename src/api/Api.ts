@@ -16,6 +16,10 @@ export interface FetchUserRequest {
     clientId : string
 }
 
+export interface FetchAccountRequest {
+    accountId : string
+}
+
 /*export interface FetchGridDataRequest {
     gridName : string,
     offset : number;
@@ -37,6 +41,10 @@ class Api {
 
     public static fetchClientData = (request : FetchUserRequest) : Promise<any> => {
         return instance.get('api/klienti/' + request.clientId);
+    };
+
+    public static fetchAccountData = (request : FetchAccountRequest) : Promise<any> => {
+        return instance.get('api/ucty/' + request.accountId);
     };
 
     public static updateClientData = (request : Client) : Promise<any> => {

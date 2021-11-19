@@ -146,9 +146,6 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
         addressSearchConditions.push(idAddresssearchCondition);
 
 
-
-
-
         const accountSearchConditions : SearchCondition[] = [];
 
         const idAccountSearchCondition : SearchCondition = {searchType : SEARCHTYPE.EQUALS, fieldName : "clientId", value1 : this.props.match.params.clientID};
@@ -161,7 +158,6 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
 
         const clientIdDocumentSearchConditions : SearchCondition = {searchType : SEARCHTYPE.EQUALS, fieldName : "clientId", value1 : this.props.match.params.clientID};
 
-        console.error(clientIdDocumentSearchConditions);
 
         documentSearchConditions.push(clientIdDocumentSearchConditions);
 
@@ -170,7 +166,6 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
         }
 
         const client : any  = this.state.client;
-        /*const address : Address = {clientId: client.id};*/
 
         return (
             <div className='clientInfo'>
@@ -180,7 +175,7 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
                     <div className='separator'/>
                     <RoutableGrid gridName='Addresses' searchConditions={addressSearchConditions} key={'AGK-' + this.state.addressesGridKey}/>
                     <div className='separator'/>
-                    <RoutableGrid gridName='Accounts' searchConditions={accountSearchConditions}/>
+                    <RoutableGrid gridName='Accounts' searchConditions={accountSearchConditions} linkToRoute={'ucty/'}/>
                     <div className='separator'/>
                     <RoutableGrid gridName='Documents' searchConditions={documentSearchConditions} key={'DGK-' + this.state.filesGridKey}/>
 

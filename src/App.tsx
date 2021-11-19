@@ -10,6 +10,7 @@ import Navbar from "./components/navBar/Navbar";
 import {SearchCondition} from "./gridomizer/domain/GridData";
 import {SEARCHTYPE} from "./gridomizer/domain/GridConfig";
 import ClientInfo from "./components/clientInfo/ClientInfo";
+import AccountInfo from "./components/accountInfo/AccountInfo";
 
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
                             <Route path={'/karty'} exact render={() => <RoutableGrid key='kartyGrid' gridName={'Cards'} linkToRoute='cards/'/>}/>
                             <Route path={'/klientiSort'} exact render={() => <RoutableGrid key='klientiSortGrid' gridName={'Clients'} searchConditions={clientSearchConditions}/>}/>
                             <Route path={'/clients/:clientID'} component={ClientInfo}/>
+                            <Route path={'/ucty/:accountId'} component={AccountInfo}/>
                             <Route path={'/api/dokumenty/:documentId'} component={BackendRedirect}/>
                         </Switch>
                     </Grid>
