@@ -4,13 +4,14 @@ import {Grid} from "@material-ui/core";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import {BrowserRouter, NavLink, Redirect, Route, Switch} from "react-router-dom";
+import {BrowserRouter, NavLink, Route, Switch} from "react-router-dom";
 import RoutableGrid from "./components/routableGrid/RoutableGrid";
 import Navbar from "./components/navBar/Navbar";
 import {SearchCondition} from "./gridomizer/domain/GridData";
 import {SEARCHTYPE} from "./gridomizer/domain/GridConfig";
 import ClientInfo from "./components/clientInfo/ClientInfo";
 import AccountInfo from "./components/accountInfo/AccountInfo";
+import AddressInfo from "./components/addressInfo/AddressInfo";
 
 
 function App() {
@@ -48,13 +49,14 @@ function App() {
                     </Grid>
                     <Grid item xs={9}>
                         <Switch>
-                            <Route path={'/ucty'} exact render={() => <RoutableGrid key='accountGrid' gridName={'Accounts'} linkToRoute='accounts/'/>}/>
                             <Route path={'/klienti'} exact render={() => <RoutableGrid key='clientsGrid' gridName={'Clients'} linkToRoute='clients/'/>}/>
+                            <Route path={'/ucty'} exact render={() => <RoutableGrid key='accountGrid' gridName={'Accounts'} linkToRoute='accounts/'/>}/>
                             <Route path={'/karty'} exact render={() => <RoutableGrid key='kartyGrid' gridName={'Cards'} linkToRoute='cards/'/>}/>
                             <Route path={'/klientiSort'} exact render={() => <RoutableGrid key='klientiSortGrid' gridName={'Clients'} searchConditions={clientSearchConditions}/>}/>
                             <Route path={'/clients/:clientID'} component={ClientInfo}/>
                             <Route path={'/ucty/:accountId'} component={AccountInfo}/>
                             <Route path={'/api/dokumenty/:documentId'} component={BackendRedirect}/>
+                            <Route path={'/addresses/:addressID'} component={AddressInfo}/>
                         </Switch>
                     </Grid>
                 </Grid>

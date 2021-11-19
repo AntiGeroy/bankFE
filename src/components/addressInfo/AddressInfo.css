@@ -1,0 +1,16 @@
+.addressInfo{
+    display: flex;
+    flex-direction: column;
+    margin-right: 10%;
+}
+
+.separator{
+    margin-bottom: 3%;
+}
+
+.buttonBlockClientInfo2{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    column-gap: 20px;
+}

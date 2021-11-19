@@ -1,70 +1,81 @@
-import React from "react";
 import {Card} from "@material-ui/core";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import './ClientCardInfo.css';
 import CardHeader from "@material-ui/core/CardHeader";
-import {default as MUIGrid} from "@material-ui/core/Grid";
+import CardContent from "@material-ui/core/CardContent";
+import {default as MUIGrid} from "@material-ui/core/Grid/Grid";
+import Typography from "@material-ui/core/Typography";
+import React from "react";
 
-interface ClientInfoCardProps {
-    id : number,
-    name : string,
-    surname : string,
-    phoneNumber : string,
-    birthNumber : string;
+interface AddressInfoCardProps {
+    addressId : number,
+    clientId : number,
+    houseNumber : string,
+    street : string,
+    town : string,
+    postalCode : string,
+    countryCode : string;
 }
 
-const ClientInfoCard = (props : ClientInfoCardProps) => {
+const AddressInfoCard = (props : AddressInfoCardProps) => {
     return (
-        <Card className='clientCardInfo'>
-            <CardHeader title='Údaje o klientovi:'/>
+        <Card className='addressInfoCard'>
+            <CardHeader title='Údaje o adrese:'/>
             <CardContent>
                 <MUIGrid container>
 
                     <MUIGrid item xs ={2}>
                         <Typography color="textSecondary" gutterBottom>
-                            Jméno:
+                            Číslo popisne:
                         </Typography>
                     </MUIGrid>
                     <MUIGrid item xs ={10}>
                         <Typography color="textPrimary" gutterBottom>
-                            {props.name}
+                            {props.houseNumber}
                         </Typography>
                     </MUIGrid>
 
                     <MUIGrid item xs ={2}>
                         <Typography color="textSecondary" gutterBottom>
-                            Přijmení:
+                            Ulice:
                         </Typography>
                     </MUIGrid>
                     <MUIGrid item xs ={10}>
                         <Typography color="textPrimary" gutterBottom>
-                            {props.surname}
+                            {props.street}
                         </Typography>
                     </MUIGrid>
 
                     <MUIGrid item xs ={2}>
                         <Typography color="textSecondary" gutterBottom>
-                            Kontaktní číslo:
+                            Město:
                         </Typography>
                     </MUIGrid>
                     <MUIGrid item xs ={10}>
                         <Typography color="textPrimary" gutterBottom>
-                            {props.phoneNumber}
+                            {props.town}
                         </Typography>
                     </MUIGrid>
 
                     <MUIGrid item xs ={2}>
                         <Typography color="textSecondary" gutterBottom>
-                            Rodné číslo:
+                            PSC:
                         </Typography>
                     </MUIGrid>
                     <MUIGrid item xs ={10}>
                         <Typography color="textPrimary" gutterBottom>
-                            {props.birthNumber}
+                            {props.postalCode}
                         </Typography>
                     </MUIGrid>
 
+                    <MUIGrid item xs ={2}>
+                        <Typography color="textSecondary" gutterBottom>
+                            Kod země:
+                        </Typography>
+                    </MUIGrid>
+                    <MUIGrid item xs ={10}>
+                        <Typography color="textPrimary" gutterBottom>
+                            {props.countryCode}
+                        </Typography>
+                    </MUIGrid>
                 </MUIGrid>
             </CardContent>
         </Card>
@@ -72,5 +83,4 @@ const ClientInfoCard = (props : ClientInfoCardProps) => {
 
 };
 
-
-export default ClientInfoCard;
+export default AddressInfoCard;

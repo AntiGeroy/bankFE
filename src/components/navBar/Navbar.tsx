@@ -15,7 +15,7 @@ const Navbar = (props : any) => {
         }
         else{
             setScrolled(false);
-        }
+        }   
     };
 
     const handleInput =  (event: React.ChangeEvent<HTMLInputElement>) : void => {

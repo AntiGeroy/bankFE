@@ -141,9 +141,10 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
 
         const addressSearchConditions : SearchCondition[] = [];
 
-        const idAddresssearchCondition : SearchCondition = {searchType : SEARCHTYPE.EQUALS, fieldName : "clientId", value1 : this.props.match.params.clientID};
+        const idAddressSearchCondition : SearchCondition = {searchType : SEARCHTYPE.EQUALS,
+            fieldName : "clientId", value1 : this.props.match.params.clientID};
 
-        addressSearchConditions.push(idAddresssearchCondition);
+        addressSearchConditions.push(idAddressSearchCondition);
 
 
         const accountSearchConditions : SearchCondition[] = [];
@@ -152,7 +153,7 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
 
         accountSearchConditions.push(idAccountSearchCondition);
 
-        addressSearchConditions.push(idAddresssearchCondition);
+        addressSearchConditions.push(idAddressSearchCondition);
 
         const documentSearchConditions : SearchCondition[] = [];
 
@@ -173,7 +174,7 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
                     <ClientInfoCard id={client?.id} name={client?.name} surname={client?.surname} birthNumber={client?.birthNumber} phoneNumber={client?.phoneNumber}/>
                     {this.renderButtons()}
                     <div className='separator'/>
-                    <RoutableGrid gridName='Addresses' searchConditions={addressSearchConditions} key={'AGK-' + this.state.addressesGridKey}/>
+                    <RoutableGrid gridName='Addresses' searchConditions={addressSearchConditions} key={'AGK-' + this.state.addressesGridKey} linkToRoute='addresses/'/>
                     <div className='separator'/>
                     <RoutableGrid gridName='Accounts' searchConditions={accountSearchConditions} linkToRoute={'ucty/'}/>
                     <div className='separator'/>

@@ -1,4 +1,4 @@
-import GridData, {GridDataRequest, SearchCondition} from "../gridomizer/domain/GridData";
+import  {GridDataRequest} from "../gridomizer/domain/GridData";
 import {Address, Client, File} from "../Types";
 
 const axios = require('axios').default;
@@ -6,7 +6,6 @@ const axios = require('axios').default;
 const instance = axios.create({
     baseURL: 'http://localhost:8080',
 });
-
 
 export interface FetchGridRequest {
     gridName : string
@@ -20,13 +19,9 @@ export interface FetchAccountRequest {
     accountId : string
 }
 
-/*export interface FetchGridDataRequest {
-    gridName : string,
-    offset : number;
-    count : number;
-    searchConditions : SearchCondition[]
-    sortConditions : SortCondition[]
-}*/
+export interface FetchAddressRequest {
+    addressId : string
+}
 
 
 class Api {
@@ -56,9 +51,7 @@ class Api {
     };
 
     public static saveNewDocument = (request : File, fileData : any) : Promise<any> => {
-
         const formData = new FormData();
-        console.error("SENDING DATA : ", fileData);
         formData.append('file', fileData);
         formData.append('name', request.name ? request.name : '');
         formData.append('clientId', request.clientId ? String(request.clientId) : '');
@@ -67,7 +60,11 @@ class Api {
         const config = {headers: {'content-type': 'multipart/form-data'}};
 
         return instance.post('api/dokumenty/novy', formData, config);
-    }
+    };
+
+    public static fetchAddressData = (request : FetchAddressRequest) : Promise<any> => {
+        return instance.get('api/adresy/' + request.addressId);
+    };
 }
 
 export default Api;
