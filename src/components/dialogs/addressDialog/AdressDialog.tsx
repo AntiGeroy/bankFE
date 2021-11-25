@@ -14,6 +14,7 @@ interface AddNewAddressDialogProps {
     handleClose : any,
     setMessage : any,
     setError : any,
+    setAddress: any,
     setKey : any,
     address : Address
 }
@@ -141,12 +142,22 @@ class AddressDialog extends React.Component<AddNewAddressDialogProps, AddNewAddr
         else{
             const modifiedAddressData : Address = {...this.state.fields, clientId : this.props.address.clientId};
 
-            Api.createNewAddress(modifiedAddressData).then(response => {
-                this.props.setMessage('Nová adresa byla úspěšné přidana.');
-                this.props.setKey();
-            }).catch(error => {
-                this.props.setError('Při vložení adresy došlo k chybě');
-            });
+            if(!modifiedAddressData.addressId){
+                Api.createNewAddress(modifiedAddressData).then(response => {
+                    this.props.setMessage('Nová adresa byla úspěšné přidana.');
+                    this.props.setKey();
+                }).catch(error => {
+                    this.props.setError('Při vložení adresy došlo k chybě');
+                });
+            } else {
+                Api.updateAddressData(modifiedAddressData).then(response => {
+                    this.props.setMessage('Adresa byla úspěšně změněna.');
+                    this.props.setKey();
+                    this.props.setAddress(response.data);
+                }).catch(error => {
+                    this.props.setError('Došlo k chybě při změně adresy');
+                });
+            }
 
             this.props.handleClose();
         }
@@ -238,10 +249,10 @@ class AddressDialog extends React.Component<AddNewAddressDialogProps, AddNewAddr
                             postalCodeError : ''
                         }, () => {this.props.handleClose()})}}
                             color="secondary">
-                        Zahodit zmény
+                        Zahodit změny
                     </Button>
                     <Button onClick={this.onSubmit} color="primary">
-                        Vložit adresu
+                        {this.props.address.addressId === undefined ? "Vložit adresu" : "Potvrdit změny"}
                     </Button>
                 </DialogActions>
             </Dialog>

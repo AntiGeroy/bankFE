@@ -13,6 +13,15 @@ export interface Client {
     birthNumber : string
 }
 
+export interface ClientAddress {
+    clientId : number,
+    addressId : number,
+    name? : string,
+    surname? : string,
+    birthNumber? : string,
+    active : number
+}
+
 export interface Address {
     addressId? : number,
     clientId : number,
