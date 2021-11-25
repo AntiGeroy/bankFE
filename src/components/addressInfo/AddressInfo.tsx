@@ -7,7 +7,9 @@ import AddressInfoCard from "../addrressInfoCard/AddressInfoCard";
 import RoutableGrid from "../routableGrid/RoutableGrid";
 import {SearchCondition} from "../../gridomizer/domain/GridData";
 import {SEARCHTYPE} from "../../gridomizer/domain/GridConfig";
-import {Address} from "../../Types";
+import {Address, Client, ClientAddress} from "../../Types";
+import AddressDialog from "../dialogs/addressDialog/AdressDialog";
+import AddressClientDialog from "../dialogs/addressDialog/AddressClientDialog";
 
 interface AddressInfoProps{
     match : any
@@ -16,7 +18,11 @@ interface AddressInfoProps{
 interface AddressInfoState{
     loading : boolean,
     address : Address | undefined,
+    clientAddresses : ClientAddress[] | undefined,
     showChangeDataDialog : boolean,
+    showActivateAddressDialog : boolean,
+    addressesGridKey : number,
+    addressClientDialogKey : number,
     message? : any
 }
 
@@ -24,7 +30,13 @@ class AddressInfo extends React.Component<AddressInfoProps, AddressInfoState>{
 
     constructor(props: AddressInfoProps, context: any) {
         super(props, context);
-        this.state = {loading : true, address: undefined, showChangeDataDialog : false};
+        this.state = {loading : true,
+            address: undefined,
+            clientAddresses : undefined,
+            showChangeDataDialog : false,
+            addressesGridKey : 1,
+            addressClientDialogKey : 1,
+            showActivateAddressDialog : false};
     }
 
     componentDidMount(): void {
@@ -37,20 +49,74 @@ class AddressInfo extends React.Component<AddressInfoProps, AddressInfoState>{
                 );
             }
         );
+        Api.fetchClientsOnAddress({addressId : this.props.match.params.addressID}).then(response => {
+            this.setState(
+                {
+                    clientAddresses : response.data
+                }
+            );
+        });
     }
+
+    private openChangeAddressDataDialog = () : void => {
+        this.setState({showChangeDataDialog : true});
+    };
+
+    private closeChangeAddressDataDialog = () : void => {
+        this.setState({showChangeDataDialog : false});
+    };
+
+    private openActivateAddressDialog = () : void => {
+        this.setState({showActivateAddressDialog : true});
+    };
+
+    private closeActivateAddressDialog = () : void =>{
+        this.setState({showActivateAddressDialog : false});
+    };
 
     private onCloseMessageBox = () : void => {
         this.setState({message : null})
     };
 
+    private setMessage = (message : string) : void => {
+        console.error("SETTING MESSAGE: ", message);
+        this.setState({message : {message : message, type : "info"}})
+    };
+
+    private setError = (message : string) : void => {
+        this.setState({message : {message : message, type : "error"}})
+    };
+
+    private setAddressGridKey = () : void => {
+        const key = this.generateRandomNumber(1, 100, this.state.addressesGridKey);
+        this.setState({addressesGridKey : key});
+    };
+
+    private setAddressClientDialogKey = () : void => {
+        const key = this.generateRandomNumber(1, 100, this.state.addressClientDialogKey);
+        this.setState({addressClientDialogKey : key});
+    };
+
+    private generateRandomNumber = (min : number, max : number, except : number) =>  {
+        let result : number;
+        do {
+            result = Math.floor(Math.random() * (max - min) + min);
+        } while (result === except);
+        return result;
+    };
+
+    private setAddress = (address : Address) : void =>{
+        this.setState({address : address});
+    };
+
     renderButtons() {
         return (
             <div className='buttonBlockClientInfo'>
-                <Button variant="contained" color="primary" >
+                <Button variant="contained" color="primary" onClick={this.openChangeAddressDataDialog} >
                     Editovat údaje
                 </Button>
-                <Button variant="contained" color="primary" >
-                    СПАСИБО МАМЕ
+                <Button variant="contained" color="primary" onClick={this.openActivateAddressDialog}>
+                    Aktualizace adres
                 </Button>
             </div>
         );
@@ -60,10 +126,8 @@ class AddressInfo extends React.Component<AddressInfoProps, AddressInfoState>{
         Iterable<React.ReactNode> | React.ReactPortal | boolean | null | undefined {
 
         const addressClientSearchConditions : SearchCondition[] = [];
-
         const idAddressSearchClientsCondition : SearchCondition = {searchType : SEARCHTYPE.EQUALS,
             fieldName : "addressId", value1 : this.props.match.params.addressID};
-
         addressClientSearchConditions.push(idAddressSearchClientsCondition);
 
         if (this.state.loading){
@@ -71,6 +135,8 @@ class AddressInfo extends React.Component<AddressInfoProps, AddressInfoState>{
         }
 
         const address : any  = this.state.address;
+
+        const clientAddresses : any = this.state.clientAddresses;
 
         return (
             <div className='clientInfo'>
@@ -82,9 +148,31 @@ class AddressInfo extends React.Component<AddressInfoProps, AddressInfoState>{
                                  postalCode={address?.postalCode} countryCode={address?.countryCode}/>
 
                 {this.renderButtons()}
+
                 <div className='separator'/>
 
-                <RoutableGrid gridName='ClientAddresses' searchConditions={addressClientSearchConditions} linkToRoute={'clients/' + this.state.address?.clientId}/>
+                <RoutableGrid gridName='ClientAddresses' searchConditions={addressClientSearchConditions}
+                              linkToRoute={'clients/' + this.state.address?.clientId}/>
+
+                <div className='separator'/>
+
+                <AddressDialog open={this.state.showChangeDataDialog}
+                               handleClose={this.closeChangeAddressDataDialog}
+                               setAddress={this.setAddress}
+                               setMessage={this.setMessage}
+                               setError={this.setError}
+                               setKey={this.setAddressGridKey}
+                               address={address}
+                />
+
+                <AddressClientDialog open={this.state.showActivateAddressDialog}
+                                     handleClose={this.closeActivateAddressDialog}
+                                     setAddress={this.setAddress}
+                                     setKey={this.setAddressClientDialogKey}
+                                     address={address}
+                                     clients={clientAddresses}
+                                     key = {"ACD-" + this.state.addressClientDialogKey}
+                />
             </div>
         );
     }

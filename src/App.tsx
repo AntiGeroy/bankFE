@@ -24,7 +24,7 @@ function App() {
 
   return (
         <div>
-
+            
             <BrowserRouter>
                 <Navbar/>
                 <Grid container>

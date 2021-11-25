@@ -1,5 +1,5 @@
 import  {GridDataRequest} from "../gridomizer/domain/GridData";
-import {Address, Client, File} from "../Types";
+import {Address, Client, ClientAddress, File} from "../Types";
 
 const axios = require('axios').default;
 
@@ -23,6 +23,11 @@ export interface FetchAddressRequest {
     addressId : string
 }
 
+export interface UpdateClientAddressRequest {
+    addressId : string,
+    clientId : string,
+    state : number
+}
 
 class Api {
 
@@ -62,8 +67,16 @@ class Api {
         return instance.put('api/klienti/' + request.clientId, request);
     };
 
+    public static updateClientAddressState = (request : ClientAddress) : Promise<any> => {
+        return instance.put('api/klienti/addressState', request);
+    };
+
     public static createNewAddress = (request : Address) : Promise<any> => {
         return instance.post('api/adresy/novy', request);
+    };
+
+    public static updateAddressData = (request : Address) : Promise<any> =>{
+        return instance.put('api/adresy/' + request.addressId, request);
     };
 
     public static saveNewDocument = (request : File, fileData : any) : Promise<any> => {
@@ -80,6 +93,10 @@ class Api {
 
     public static fetchAddressData = (request : FetchAddressRequest) : Promise<any> => {
         return instance.get('api/adresy/' + request.addressId);
+    };
+
+    public static fetchClientsOnAddress = (request : FetchAddressRequest) : Promise<any> => {
+        return instance.get('api/klienti/batch/' + request.addressId);
     };
 }
 

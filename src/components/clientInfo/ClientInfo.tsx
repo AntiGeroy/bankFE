@@ -22,7 +22,7 @@ interface ClientInfoState {
     loading : boolean,
     client : Client | undefined,
     showChangeDataDialog : boolean,
-    showAddNewAdressDialog : boolean,
+    showAddNewAddressDialog : boolean,
     showAddNewFileDialog : boolean,
     showAddNewAccountDialog : boolean,
     message? : any
@@ -39,7 +39,7 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
             loading : true,
             client: undefined,
             showChangeDataDialog : false,
-            showAddNewAdressDialog : false,
+            showAddNewAddressDialog : false,
             showAddNewAccountDialog : false,
             addressesGridKey: 1,
             filesGridKey: 1,
@@ -103,11 +103,11 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
     };
 
     private closeAddNewAddressDialog = () : void => {
-        this.setState({showAddNewAdressDialog : false});
+        this.setState({showAddNewAddressDialog : false});
     };
 
     private openAddNewAddressDialog = () : void => {
-        this.setState({showAddNewAdressDialog : true});
+        this.setState({showAddNewAddressDialog : true});
     };
 
     private closeAddNewAccountDialog = () : void => {
@@ -200,8 +200,9 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
                     <ClientDataDialog open={this.state.showChangeDataDialog} handleClose={this.closeChangeClientDataDialog} client={client}
                                             setMessage={this.setMessage} setError={this.setError} setClient={this.setClient}
                     />
-                    <AddressDialog open={this.state.showAddNewAdressDialog} handleClose={this.closeAddNewAddressDialog} setKey={this.setAddressGridKey}
-                                     setMessage={this.setMessage} setError={this.setError} address={{clientId: this.props.match.params.clientID}}
+                    <AddressDialog open={this.state.showAddNewAddressDialog} handleClose={this.closeAddNewAddressDialog} setKey={this.setAddressGridKey}
+                                   setMessage={this.setMessage} setError={this.setError} address={{clientId: this.props.match.params.clientID}}
+                                   setAddress={undefined}
                     />
 
                     <FileDialog open={this.state.showAddNewFileDialog}
