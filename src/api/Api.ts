@@ -26,6 +26,14 @@ export interface FetchAddressRequest {
 
 class Api {
 
+    public static freezeAccount = (request : {accountId : number}) : Promise<any> => {
+      return instance.post("api/ucty/zmrazit", request);
+    };
+
+    public static unfreezeAccount = (request : {accountId : number}) : Promise<any> => {
+        return instance.post("api/ucty/rozmrazit", request);
+    };
+
     public static fetchGridConfig = (request : FetchGridRequest) : Promise<any> => {
         return instance.get(("api/core/grids/" + request.gridName));
     };
@@ -38,8 +46,16 @@ class Api {
         return instance.get('api/klienti/' + request.clientId);
     };
 
+    public static addNewTransaction = (request : any) : Promise<any> => {
+        return instance.post('api/transakce/novy', request);
+    };
+
     public static fetchAccountData = (request : FetchAccountRequest) : Promise<any> => {
         return instance.get('api/ucty/' + request.accountId);
+    };
+
+    public static addNewAccount = (request : any) : Promise<any> => {
+        return instance.post('api/ucty/novy', request);
     };
 
     public static updateClientData = (request : Client) : Promise<any> => {

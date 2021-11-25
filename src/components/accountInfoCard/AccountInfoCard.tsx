@@ -14,109 +14,120 @@ interface AccountInfoCardProps {
     accountType : string,
     limit? : number,
     rate? : number,
-    timePeriod? : string
-
+    timePeriod? : string,
+    key : string
 }
 
-const AccountInfoCard = (props : AccountInfoCardProps) => {
+class AccountInfoCard extends React.Component<AccountInfoCardProps, any>{
 
-    return (
-        <Card className='clientCardInfo'>
-            <CardHeader title='Údaje o účtě:'/>
-            <CardContent>
-                <MUIGrid container>
+    render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | Iterable<React.ReactNode> | React.ReactPortal | boolean | null | undefined {
+        let accountTypeInfo : string = "";
 
-                    <MUIGrid item xs ={2}>
-                        <Typography color="textSecondary" gutterBottom>
-                            Číslo účtu:
-                        </Typography>
+        if (this.props.accountType === "U"){
+            accountTypeInfo = "Úvěrový";
+        } else if (this.props.accountType === "S"){
+            accountTypeInfo = "Spořicí";
+        } else {
+            accountTypeInfo = "Běžný";
+        }
+
+        return (
+            <Card className='clientCardInfo' key={this.props.key}>
+                <CardHeader title='Údaje o účtě:'/>
+                <CardContent>
+                    <MUIGrid container>
+
+                        <MUIGrid item xs ={2}>
+                            <Typography color="textSecondary" gutterBottom>
+                                Číslo účtu:
+                            </Typography>
+                        </MUIGrid>
+                        <MUIGrid item xs ={10}>
+                            <Typography color="textPrimary" gutterBottom>
+                                {String(this.props.accountNumber).replace(/(.{4})/g,"$1-").replace(/.$/, "")}
+                            </Typography>
+                        </MUIGrid>
+
+                        <MUIGrid item xs ={2}>
+                            <Typography color="textSecondary" gutterBottom>
+                                Stav účtu:
+                            </Typography>
+                        </MUIGrid>
+                        <MUIGrid item xs ={10}>
+                            <Typography color="textPrimary" gutterBottom>
+                                {this.props.stateInfo}
+                            </Typography>
+                        </MUIGrid>
+
+                        <MUIGrid item xs ={2}>
+                            <Typography color="textSecondary" gutterBottom>
+                                Typ učtu:
+                            </Typography>
+                        </MUIGrid>
+                        <MUIGrid item xs ={10}>
+                            <Typography color="textPrimary" gutterBottom>
+                                {accountTypeInfo}
+                            </Typography>
+                        </MUIGrid>
+
+                        <MUIGrid item xs ={2}>
+                            <Typography color="textSecondary" gutterBottom>
+                                Aktuální zůstatek:
+                            </Typography>
+                        </MUIGrid>
+                        <MUIGrid item xs ={10}>
+                            <Typography color="textPrimary" gutterBottom>
+                                {this.props.remainder}
+                            </Typography>
+                        </MUIGrid>
+
+                        {this.props.limit ?
+                            <React.Fragment>
+                                <MUIGrid item xs ={2}>
+                                    <Typography color="textSecondary" gutterBottom>
+                                        Hranice čerpání:
+                                    </Typography>
+                                </MUIGrid>
+                                <MUIGrid item xs ={10}>
+                                    <Typography color="textPrimary" gutterBottom>
+                                        {this.props.limit}
+                                    </Typography>
+                                </MUIGrid>
+                            </React.Fragment> : null}
+
+                        {this.props.rate ?
+                            <React.Fragment>
+                                <MUIGrid item xs ={2}>
+                                    <Typography color="textSecondary" gutterBottom>
+                                        Úrok:
+                                    </Typography>
+                                </MUIGrid>
+                                <MUIGrid item xs ={10}>
+                                    <Typography color="textPrimary" gutterBottom>
+                                        {this.props.rate}%
+                                    </Typography>
+                                </MUIGrid>
+                            </React.Fragment> : null}
+
+                        {this.props.timePeriod ?
+                            <React.Fragment>
+                                <MUIGrid item xs ={2}>
+                                    <Typography color="textSecondary" gutterBottom>
+                                        Za časové období:
+                                    </Typography>
+                                </MUIGrid>
+                                <MUIGrid item xs ={10}>
+                                    <Typography color="textPrimary" gutterBottom>
+                                        {this.props.timePeriod}
+                                    </Typography>
+                                </MUIGrid>
+                            </React.Fragment> : null}
+
                     </MUIGrid>
-                    <MUIGrid item xs ={10}>
-                        <Typography color="textPrimary" gutterBottom>
-                            {props.accountNumber}
-                        </Typography>
-                    </MUIGrid>
-
-                    <MUIGrid item xs ={2}>
-                        <Typography color="textSecondary" gutterBottom>
-                            Stav účtu:
-                        </Typography>
-                    </MUIGrid>
-                    <MUIGrid item xs ={10}>
-                        <Typography color="textPrimary" gutterBottom>
-                            {props.stateInfo}
-                        </Typography>
-                    </MUIGrid>
-
-                    <MUIGrid item xs ={2}>
-                        <Typography color="textSecondary" gutterBottom>
-                            Typ učtu:
-                        </Typography>
-                    </MUIGrid>
-                    <MUIGrid item xs ={10}>
-                        <Typography color="textPrimary" gutterBottom>
-                            {props.accountType}
-                        </Typography>
-                    </MUIGrid>
-
-                    <MUIGrid item xs ={2}>
-                        <Typography color="textSecondary" gutterBottom>
-                            Aktuální zůstatek:
-                        </Typography>
-                    </MUIGrid>
-                    <MUIGrid item xs ={10}>
-                        <Typography color="textPrimary" gutterBottom>
-                            {props.remainder}
-                        </Typography>
-                    </MUIGrid>
-
-                    {props.limit ?
-                        <React.Fragment>
-                            <MUIGrid item xs ={2}>
-                                <Typography color="textSecondary" gutterBottom>
-                                    Hranice čerpání:
-                                </Typography>
-                            </MUIGrid>
-                            <MUIGrid item xs ={10}>
-                                <Typography color="textPrimary" gutterBottom>
-                                    {props.limit}
-                                </Typography>
-                            </MUIGrid>
-                        </React.Fragment> : null}
-
-                    {props.rate ?
-                        <React.Fragment>
-                            <MUIGrid item xs ={2}>
-                                <Typography color="textSecondary" gutterBottom>
-                                    Úrok:
-                                </Typography>
-                            </MUIGrid>
-                            <MUIGrid item xs ={10}>
-                                <Typography color="textPrimary" gutterBottom>
-                                    {props.rate}%
-                                </Typography>
-                            </MUIGrid>
-                        </React.Fragment> : null}
-
-                    {props.timePeriod ?
-                        <React.Fragment>
-                            <MUIGrid item xs ={2}>
-                                <Typography color="textSecondary" gutterBottom>
-                                    Za časové období:
-                                </Typography>
-                            </MUIGrid>
-                            <MUIGrid item xs ={10}>
-                                <Typography color="textPrimary" gutterBottom>
-                                    {props.timePeriod}
-                                </Typography>
-                            </MUIGrid>
-                        </React.Fragment> : null}
-
-                </MUIGrid>
-            </CardContent>
-        </Card>
-    );
-
+                </CardContent>
+            </Card>
+        );
+    }
 };
 
 export default AccountInfoCard;

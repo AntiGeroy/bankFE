@@ -12,6 +12,7 @@ import FileDialog from '../dialogs/fileDialog/FileDialog';
 import {Client} from "../../Types";
 import ClientDataDialog from "../dialogs/clientDataDialog/ClientDataDialog";
 import AddressDialog from "../dialogs/addressDialog/AdressDialog";
+import AccountDialog from "../dialogs/accountDialog/AccountDialog";
 
 interface ClientInfoProps{
     match : any
@@ -23,8 +24,10 @@ interface ClientInfoState {
     showChangeDataDialog : boolean,
     showAddNewAdressDialog : boolean,
     showAddNewFileDialog : boolean,
+    showAddNewAccountDialog : boolean,
     message? : any
     addressesGridKey : number,
+    accountGridKey : number,
     filesGridKey : number
 }
 
@@ -37,8 +40,10 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
             client: undefined,
             showChangeDataDialog : false,
             showAddNewAdressDialog : false,
+            showAddNewAccountDialog : false,
             addressesGridKey: 1,
             filesGridKey: 1,
+            accountGridKey: 1,
             showAddNewFileDialog : false};
     }
 
@@ -60,6 +65,11 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
         this.setState({filesGridKey : key});
     };
 
+    private setAccountGridKey = () : void => {
+        const key = this.generateRandomNumber(1, 100, this.state.accountGridKey);
+        this.setState({accountGridKey : key});
+    };
+
     private onCloseMessageBox = () : void => {
         this.setState({message : null})
     };
@@ -69,7 +79,6 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
     };
 
     private setMessage = (message : string) : void => {
-        console.error("SETTING MESSAGE: ", message);
         this.setState({message : {message : message, type : "info"}})
     };
 
@@ -101,6 +110,14 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
         this.setState({showAddNewAdressDialog : true});
     };
 
+    private closeAddNewAccountDialog = () : void => {
+        this.setState({showAddNewAccountDialog : false});
+    };
+
+    private openAddNewAccountDialog = () : void => {
+        this.setState({showAddNewAccountDialog : true});
+    };
+
 
     componentDidMount(): void {
         Api.fetchClientData({clientId : this.props.match.params.clientID}).then( response => {
@@ -124,7 +141,7 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
               <Button variant="contained" color="primary" onClick={this.openAddNewAddressDialog}>
                   Přidat novou adresu
               </Button>
-              <Button variant="contained" color="primary" >
+              <Button variant="contained" color="primary" onClick={this.openAddNewAccountDialog}>
                   Otevřit nový účet
               </Button>
               <Button variant="contained" color="primary"  onClick={this.openAddNewFileDialog}>
@@ -176,7 +193,7 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
                     <div className='separator'/>
                     <RoutableGrid gridName='Addresses' searchConditions={addressSearchConditions} key={'AGK-' + this.state.addressesGridKey} linkToRoute='addresses/'/>
                     <div className='separator'/>
-                    <RoutableGrid gridName='Accounts' searchConditions={accountSearchConditions} linkToRoute={'ucty/'}/>
+                    <RoutableGrid gridName='Accounts' searchConditions={accountSearchConditions} key={'ACGK-' + this.state.accountGridKey} linkToRoute={'ucty/'}/>
                     <div className='separator'/>
                     <RoutableGrid gridName='Documents' searchConditions={documentSearchConditions} key={'DGK-' + this.state.filesGridKey}/>
 
@@ -191,7 +208,17 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
                                 handleClose={this.closeAddNewFileDialog}
                                 setMessage={this.setMessage}
                                 setError={this.setError}
-                                setKey={this.setFileGridKey} file={{clientId: this.props.match.params.clientID}}/>
+                                setKey={this.setFileGridKey} file={{clientId: this.props.match.params.clientID}}
+                    />
+
+                    <AccountDialog open={this.state.showAddNewAccountDialog}
+                                   handleClose={this.closeAddNewAccountDialog}
+                                   setMessage={this.setMessage}
+                                   setError={this.setError}
+                                   setKey={this.setAccountGridKey}
+                                   clientId={this.props.match.params.clientID}
+                    />
+
             </div>
         );
     }
