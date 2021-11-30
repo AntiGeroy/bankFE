@@ -7,6 +7,7 @@ import AccountInfoCard from "../accountInfoCard/AccountInfoCard";
 import {Link} from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import {SearchCondition} from "../../gridomizer/domain/GridData";
+import {SEARCHTYPE} from "../../gridomizer/domain/GridConfig";
 
 interface AddressInfoProps{
     match : any,
@@ -30,7 +31,12 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
         super(props, context);
         this.state = {
             account : undefined,
-            loading : true
+            loading : true,
+            showNewTransactionDialog : false,
+            showFreezeAccountDialog : false,
+            showUnfreezeAccountDialog : false,
+            transactionsGridKey : 1,
+            cardsGridKey : 1,
         }
     }
 
