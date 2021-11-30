@@ -1,13 +1,17 @@
 import React from "react";
 import {CircularProgress} from "@material-ui/core";
 import Api from "../../api/Api";
-import {Account, Address} from "../../Types";
+import {Account, Address, UserData} from "../../Types";
 import './AccountInfo.css';
 import AccountInfoCard from "../accountInfoCard/AccountInfoCard";
 import {Link} from "react-router-dom";
 import Button from "@material-ui/core/Button";
+import RoutableGrid from "../routableGrid/RoutableGrid";
 import {SearchCondition} from "../../gridomizer/domain/GridData";
 import {SEARCHTYPE} from "../../gridomizer/domain/GridConfig";
+import MessageBox from "../messageBox/MessageBox";
+/*import TransactionDialog from "../dialogs/transactionDialog/TransactionDialog";
+import SimpleDialog from "../dialogs/simpleDialog/SimpleDialog";*/
 
 interface AddressInfoProps{
     match : any,
