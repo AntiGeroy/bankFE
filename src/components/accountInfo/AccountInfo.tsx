@@ -224,7 +224,7 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
         let creditsGrid : any = null;
 
         if (account.accountType === "U") {
-            creditsGrid = <RoutableGrid gridName='Credits' searchConditions={creditsSearchConditions} key={'CGK-' + 1}/>;
+            creditsGrid = <RoutableGrid gridName='Credits' searchConditions={creditsSearchConditions} key={'CGK-' + 1} linkToRoute={'uvery/'}/>;
         }
 
         return (

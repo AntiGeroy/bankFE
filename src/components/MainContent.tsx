@@ -19,6 +19,9 @@ import {SEARCHTYPE} from "../gridomizer/domain/GridConfig";
 import EmulateUser from "./emulateUser/EmulateUser";
 import StopEmulate from "./stopEmulate/stopEmulate";
 import UserInfo from "./userInfo/UserInfo";
+import StatisticsInfo from "./statistics/StatisticsInfo";
+import CreditInfo from "./creditInfo/CreditInfo";
+import CardInfo from "./cardInfo/CardInfo";
 
 class BackendRedirect extends React.Component<any, any>{
     componentDidMount(): void {
@@ -92,7 +95,11 @@ const MainContent = (props : any) => {
             <Route path={'/emulateUser/:userID'} component={EmulateUser}/>
             <Route path={'/stopEmulate'} component={StopEmulate}/>
             <Route path={'/uzivatel/:userId'} component={UserInfo}/>
-
+            <Route path={'/logovani'} exact render={() => <RoutableGrid key='logyGrid' gridName={'Logs'}/>}/>
+            <Route path={'/statistiky'} exact render={() => StatisticsInfo}/>
+            <Route path={'/uvery'} exact render={() => <RoutableGrid key='uveryGrid' gridName={'Credits'} linkToRoute='uvery/'/>}/>
+            <Route path={'/cards/:cardID'} component={CardInfo}/>
+            <Route path={'/uvery/:creditID'} component={CreditInfo}/>
         </Switch>
     </Grid>;
 
@@ -135,6 +142,16 @@ const MainContent = (props : any) => {
                 <ListItem>
                     <NavLink to={'/uzivatele/'}>
                         <ListItemText primary="Uživatelé" className='links'/>
+                    </NavLink>
+                </ListItem>
+                <ListItem>
+                    <NavLink to={'/logovani/'}>
+                        <ListItemText primary="Logy" className='links'/>
+                    </NavLink>
+                </ListItem>
+                <ListItem>
+                    <NavLink to={'/statistiky/'}>
+                        <ListItemText primary="Statistiky" className='links'/>
                     </NavLink>
                 </ListItem>
             </List>

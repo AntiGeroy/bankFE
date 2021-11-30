@@ -1,5 +1,5 @@
 import  {GridDataRequest} from "../gridomizer/domain/GridData";
-import {Address, Client, ClientAddress, File, UserData} from "../Types";
+import {Address, Client, ClientAddress, Credit, File, UserData} from "../Types";
 
 const axios = require('axios').default;
 
@@ -94,6 +94,22 @@ class Api {
         return instance.get("api/auth/reset/" + request, config);
     };
 
+    public static freezeCard = (request: {cardId : number}) : Promise<any> => {
+        return instance.post("api/karty/zmrazit", request);
+    };
+
+    public static unfreezeCard = (request: {cardId : number}) : Promise<any> => {
+        return instance.post("api/karty/rozmrazit", request);
+    };
+
+    public static terminateCard = (request: {cardId : number}) : Promise<any> => {
+        return instance.post("api/karty/terminovat", request);
+    };
+
+    public static fetchCreditData = (request : FetchCreditRequest) : Promise<any> => {
+        return instance.get('api/uvery/' + request.creditId);
+    };
+
     public static getUserById = (request : number, token : string) : Promise<any> => {
         const config = {
             headers: {
@@ -112,6 +128,10 @@ class Api {
         };
 
         return instance.post("api/auth/new", request, config);
+    };
+
+    public static updateCreditData = (request: Credit) : Promise<any> => {
+        return instance.put("api/uvery/" + request.creditId, request);
     };
 
     public static authenticateUser = (request : AuthRequest): Promise<any> => {
