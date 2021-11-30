@@ -39,8 +39,6 @@ export interface UpdateClientAddressRequest {
 
 class Api {
 
-<<<<<<< Updated upstream
-=======
     public static freezeCard = (request: {cardId : number}) : Promise<any> => {
         return instance.post("api/karty/zmrazit", request);
     };
@@ -69,7 +67,6 @@ class Api {
         return instance.post("api/ucty/rozmrazit", request);
     };
 
->>>>>>> Stashed changes
     public static fetchGridConfig = (request : FetchGridRequest) : Promise<any> => {
         return instance.get(("api/core/grids/" + request.gridName));
     };
@@ -82,8 +79,6 @@ class Api {
         return instance.get('api/klienti/' + request.clientId);
     };
 
-<<<<<<< Updated upstream
-=======
     public static fetchCardData = (request : FetchCardRequest) : Promise<any> => {
         return instance.get('api/karty/' + request.cardId);
     };
@@ -92,7 +87,6 @@ class Api {
         return instance.post('api/transakce/novy', request);
     };
 
->>>>>>> Stashed changes
     public static fetchAccountData = (request : FetchAccountRequest) : Promise<any> => {
         return instance.get('api/ucty/' + request.accountId);
     };

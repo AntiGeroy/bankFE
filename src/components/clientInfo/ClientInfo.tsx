@@ -101,8 +101,6 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
         this.setState({showAddNewAddressDialog : true});
     };
 
-<<<<<<< Updated upstream
-=======
     private closeAddNewAccountDialog = () : void => {
         this.setState({showAddNewAccountDialog : false});
     };
@@ -110,7 +108,6 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
     private openAddNewAccountDialog = () : void => {
         this.setState({showAddNewAccountDialog : true});
     };
->>>>>>> Stashed changes
 
     componentDidMount(): void {
         Api.fetchClientData({clientId : this.props.match.params.clientID}).then( response => {

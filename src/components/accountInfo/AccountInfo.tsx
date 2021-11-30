@@ -6,6 +6,7 @@ import './AccountInfo.css';
 import AccountInfoCard from "../accountInfoCard/AccountInfoCard";
 import {Link} from "react-router-dom";
 import Button from "@material-ui/core/Button";
+import {SearchCondition} from "../../gridomizer/domain/GridData";
 
 interface AddressInfoProps{
     match : any,
@@ -19,7 +20,6 @@ interface AccountInfoState {
 
 class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
 
-
     constructor(props : any, context : any) {
         super(props, context);
         this.state = {
@@ -28,8 +28,6 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
         }
     }
 
-<<<<<<< Updated upstream
-=======
     private onCloseMessageBox = () : void => {
         this.setState({message : null})
     };
@@ -119,7 +117,6 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
         this.setCardsGridKey();
         this.setState({showUnfreezeAccountDialog : false});
     };
->>>>>>> Stashed changes
 
     componentDidMount(): void {
         Api.fetchAccountData({accountId : this.props.match.params.accountId}).then( response => {
@@ -139,10 +136,6 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
         }
 
         const account : any  = this.state.account;
-
-<<<<<<< Updated upstream
-        console.error("FETCHED ACCOUNT: ", account);
-=======
 
         const cardsSearchConditions : SearchCondition[] = [];
 
