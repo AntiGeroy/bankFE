@@ -26,7 +26,8 @@ const EMPTY_DATA : GridData = {
 }
 
 interface Props {
-    gridConfig?: GridConfig
+    gridConfig?: GridConfig,
+    label? : string,
     gridData? : GridData
     rowLink? : string
     selectable? : boolean,
@@ -208,7 +209,10 @@ export default class Grid extends React.Component<Props, State> {
     private renderToolBar = () : ReactNode => {
         const elements = this.props.elements
         const header = elements?.toolbar ? elements?.toolbar : {}
-        const {gridLabel, columns} = this.state.gridConfig;
+        let {gridLabel, columns} = this.state.gridConfig;
+        if (this.props.label) {
+            gridLabel = this.props.label;
+        }
         const key = gridLabel + "header"
         return <GridToolbar
             key={key}

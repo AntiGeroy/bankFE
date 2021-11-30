@@ -1,6 +1,8 @@
 import React, {useEffect} from "react";
 import { Link } from "react-router-dom";
 import './Navbar.css';
+import {UserData} from "../../Types";
+import UserContext from "../../UserContext";
 
 
 const Navbar = (props : any) => {
@@ -40,9 +42,57 @@ const Navbar = (props : any) => {
         navbarClasses.push('scrolled');
     }
 
+    // @ts-ignore
+    let {user} : {user : UserData} = React.useContext(UserContext);
+
+
+    if (user){
+        console.error("ROLE: ", user.role);
+        if (user.role === "ADMIN"){
+            console.error("USER IS ADMIN");
+        }
+        else {
+            console.error("USER IS NOT ADMIN");
+        }
+    }
+
+
 
     return (
         <div className='navbarWrapper'>
+
+            {user ? <div className='registrationLoginLinks'>
+                <span>
+                    <span>
+                        {user.login}
+                        {user.emulate ? " emuluje " + user.emulate.login : null}
+                    </span>
+
+                    {user.role === "ADMIN" ?
+                        (!user.emulate ?
+                            <span>
+                            &nbsp;|&nbsp;
+                            <Link to='/emulate' className='blackLink'>
+                                Emulovat sezení
+                            </Link>
+                            </span> : <span>
+                            &nbsp;|&nbsp;
+                                <Link to='/stopEmulate'
+                                      className='blackLink'>
+                                        Zastavit emulaci
+                                </Link>
+                            </span>) : null
+                    }
+
+                    &nbsp;|&nbsp;
+
+                    <Link to='/logout' className='blackLink'>
+                        Odhlásit se
+                    </Link>
+                </span>
+            </div> : null}
+
+
             <header className={navbarClasses.join(' ')}>
                 <div className='shopName'>
                     <Link to='/' className='titleLink'>

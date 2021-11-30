@@ -34,6 +34,7 @@ import {Link} from "react-router-dom";
 
 interface Props {
     gridName: string,
+    label? : string,
     linkToRoute? : string,
     searchConditions? : SearchCondition[]
 }
@@ -71,6 +72,7 @@ export default class GridComponent extends React.Component<Props, any> {
     render() {
         return <Grid
             rowLink={this.props.linkToRoute}
+            label={this.props.label}
             singleSort={true}
             selectable={true}
             initialSearchConditions={this.props.searchConditions}

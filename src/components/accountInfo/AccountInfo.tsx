@@ -1,7 +1,7 @@
 import React from "react";
 import {CircularProgress} from "@material-ui/core";
 import Api from "../../api/Api";
-import {Account, Address} from "../../Types";
+import {Account, Address, UserData} from "../../Types";
 import './AccountInfo.css';
 import AccountInfoCard from "../accountInfoCard/AccountInfoCard";
 import {Link} from "react-router-dom";
@@ -12,6 +12,7 @@ import {SEARCHTYPE} from "../../gridomizer/domain/GridConfig";
 import MessageBox from "../messageBox/MessageBox";
 import TransactionDialog from "../dialogs/transactionDialog/TransactionDialog";
 import SimpleDialog from "../dialogs/simpleDialog/SimpleDialog";
+import UserContext from "../../UserContext";
 
 interface AddressInfoProps{
     match : any,
@@ -31,6 +32,7 @@ interface AccountInfoState {
 
 class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
 
+    static contextType = UserContext;
 
     constructor(props : any, context : any) {
         super(props, context);
@@ -150,21 +152,35 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
 
     renderButtons() {
 
+        const {user} : {user : UserData;} = this.context;
+
+
+
         let newCreditButton = null;
 
-        if (this.state.account?.accountType === 'U'){
+
+
+        const account : any = this.state.account;
+
+        let effectiveUser = {...user};
+
+        if (user.emulate){
+            effectiveUser.login = user.emulate.login;
+            effectiveUser.clientId = user.emulate.clientId;
+            effectiveUser.role = user.emulate.role;
+        }
+
+        if (this.state.account?.accountType === 'U' && effectiveUser.role === 'ADMIN'){
             newCreditButton = <Button variant="contained" color="primary">
                 Nový úvěr
             </Button>
         }
 
-        const account : any = this.state.account;
-
         console.error("ACCOUNT: ", account);
 
         return (
             <div className='buttonBlockClientInfo'>
-                {account.state === "Aktivní účet" ? <Button variant="contained" color="primary" onClick={this.openAddNewTransactionDialog}>
+                {account.state === "Aktivní účet" && effectiveUser.role === "USER"? <Button variant="contained" color="primary" onClick={this.openAddNewTransactionDialog}>
                     Nová transakce
                 </Button> : null}
 
@@ -178,7 +194,7 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
                     Terminovat účet
                 </Button>
 
-                {account.state === "Aktivní účet" ? <Button variant="contained" color="primary">
+                {account.state === "Aktivní účet" && effectiveUser.role === "ADMIN" ? <Button variant="contained" color="primary">
                     Nová karta
                 </Button> : null}
 

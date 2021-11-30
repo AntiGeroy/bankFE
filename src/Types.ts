@@ -43,3 +43,22 @@ export interface Account {
     rate? : number,
     timePeriod? : string
 }
+
+export enum Role {
+    USER = "USER",
+    ADMIN = "ADMIN"
+}
+
+export interface User {
+    data : UserData | null
+}
+
+export interface UserData {
+    id : number,
+    login : string,
+    role : Role,
+    clientId? : number,
+    jwt : string,
+    emulate? : UserData
+}
+

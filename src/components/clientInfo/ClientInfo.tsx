@@ -9,10 +9,13 @@ import Api from "../../api/Api";
 import Button from "@material-ui/core/Button";
 import MessageBox, {MessageBoxProps} from "../messageBox/MessageBox";
 import FileDialog from '../dialogs/fileDialog/FileDialog';
-import {Client} from "../../Types";
+import {Client, UserData} from "../../Types";
 import ClientDataDialog from "../dialogs/clientDataDialog/ClientDataDialog";
 import AddressDialog from "../dialogs/addressDialog/AdressDialog";
 import AccountDialog from "../dialogs/accountDialog/AccountDialog";
+import UserContext from "../../UserContext";
+import {Redirect} from "react-router";
+import NewAdminUserDialog from "../dialogs/newAdminUserDialog/NewAdminUserDialog";
 
 interface ClientInfoProps{
     match : any
@@ -25,13 +28,18 @@ interface ClientInfoState {
     showAddNewAddressDialog : boolean,
     showAddNewFileDialog : boolean,
     showAddNewAccountDialog : boolean,
+    showAddNewUserDialog : boolean,
     message? : any
     addressesGridKey : number,
     accountGridKey : number,
-    filesGridKey : number
+    filesGridKey : number,
+    userGridKey : number,
+    redirectToMain : boolean
 }
 
 class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
+
+    static contextType = UserContext;
 
     constructor(props: ClientInfoProps, context: any) {
         super(props, context);
@@ -41,10 +49,14 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
             showChangeDataDialog : false,
             showAddNewAddressDialog : false,
             showAddNewAccountDialog : false,
+            showAddNewUserDialog : false,
             addressesGridKey: 1,
             filesGridKey: 1,
             accountGridKey: 1,
-            showAddNewFileDialog : false};
+            userGridKey: 1,
+            showAddNewFileDialog : false,
+            redirectToMain : false
+        };
     }
 
     private generateRandomNumber = (min : number, max : number, except : number) =>  {
@@ -53,6 +65,11 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
             result = Math.floor(Math.random() * (max - min) + min);
         } while (result === except);
         return result;
+    };
+
+    private setUserGridKey = () : void => {
+        const key = this.generateRandomNumber(1, 100, this.state.userGridKey);
+        this.setState({userGridKey : key});
     };
 
     private setAddressGridKey = () : void => {
@@ -118,9 +135,30 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
         this.setState({showAddNewAccountDialog : true});
     };
 
+    private closeAddNewUserDialog = () : void => {
+        this.setState({showAddNewUserDialog : false});
+    };
+
+    private openAddNewUserDialog = () : void => {
+        this.setState({showAddNewUserDialog : true});
+    };
+
 
     componentDidMount(): void {
-        Api.fetchClientData({clientId : this.props.match.params.clientID}).then( response => {
+
+
+        const {user} : {user : UserData;} = this.context;
+
+        if (!user){
+            this.setState({redirectToMain : true});
+            return;
+        }
+
+
+        const token = user.jwt;
+
+
+        Api.fetchClientData({clientId : this.props.match.params.clientID}, token).then( response => {
                 this.setState(
                     {
                         loading : false,
@@ -128,10 +166,11 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
                     }
                 );
             }
-        );
+        ).catch(error => this.setState({redirectToMain : true}));
     }
 
     renderButtons() {
+        const {user} : {user : UserData;} = this.context;
 
         return (
           <div className='buttonBlockClientInfo'>
@@ -141,12 +180,19 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
               <Button variant="contained" color="primary" onClick={this.openAddNewAddressDialog}>
                   Přidat novou adresu
               </Button>
-              <Button variant="contained" color="primary" onClick={this.openAddNewAccountDialog}>
+
+              {user.role === 'ADMIN' ? <Button variant="contained" color="primary" onClick={this.openAddNewAccountDialog}>
                   Otevřit nový účet
-              </Button>
-              <Button variant="contained" color="primary"  onClick={this.openAddNewFileDialog}>
+              </Button> : null}
+
+              {user.role === 'ADMIN' ? <Button variant="contained" color="primary"  onClick={this.openAddNewFileDialog}>
                   Přidat nový dokument
-              </Button>
+              </Button> : null}
+
+              {user.role === 'ADMIN' ? <Button variant="contained" color="primary"  onClick={this.openAddNewUserDialog}>
+                  Vytvořit nového uživatele
+              </Button> : null}
+
 
           </div>
         );
@@ -155,6 +201,9 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | Iterable<React.ReactNode> | React.ReactPortal | boolean | null | undefined {
 
+        if (this.state.redirectToMain){
+            return <Redirect to='/'/>
+        }
 
         const addressSearchConditions : SearchCondition[] = [];
 
@@ -184,6 +233,10 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
         }
 
         const client : any  = this.state.client;
+
+
+
+        console.error("CLIENT: ", client);
 
         return (
             <div className='clientInfo'>
@@ -218,6 +271,16 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
                                    setError={this.setError}
                                    setKey={this.setAccountGridKey}
                                    clientId={this.props.match.params.clientID}
+                    />
+
+                    <NewAdminUserDialog open={this.state.showAddNewUserDialog}
+                                        handleClose={this.closeAddNewUserDialog}
+                                        setMessage={this.setMessage}
+                                        setError={this.setError}
+                                        setKey={this.setUserGridKey}
+                                        createAdmin={false}
+                                        clientId={client.clientId}
+
                     />
 
             </div>

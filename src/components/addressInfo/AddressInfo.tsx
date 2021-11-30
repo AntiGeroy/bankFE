@@ -79,7 +79,6 @@ class AddressInfo extends React.Component<AddressInfoProps, AddressInfoState>{
     };
 
     private setMessage = (message : string) : void => {
-        console.error("SETTING MESSAGE: ", message);
         this.setState({message : {message : message, type : "info"}})
     };
 

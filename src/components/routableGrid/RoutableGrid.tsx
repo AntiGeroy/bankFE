@@ -5,11 +5,12 @@ import {SearchCondition} from "../../gridomizer/domain/GridData";
 interface RoutableGridProps {
     gridName : string,
     linkToRoute? : string,
-    searchConditions? : SearchCondition[]
+    searchConditions? : SearchCondition[],
+    label? : string
 }
 
 const routableGrid = (props : RoutableGridProps) => {
-    return <GridComponent gridName={props.gridName} linkToRoute={props.linkToRoute} searchConditions={props.searchConditions}/>
+    return <GridComponent label={props.label} gridName={props.gridName} linkToRoute={props.linkToRoute} searchConditions={props.searchConditions}/>
 };
 
 export default routableGrid;
