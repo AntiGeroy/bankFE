@@ -139,12 +139,15 @@ class AddressInfo extends React.Component<AddressInfoProps, AddressInfoState>{
 
         return (
             <div className='clientInfo'>
+                <div className='separator'/>
+
                 {this.state.message ? <MessageBox message={this.state.message.message} type={this.state.message.type}
                                                   onClose={this.onCloseMessageBox}/> : null}
 
                 <AddressInfoCard addressId={address?.addressId} clientId={address?.clientId}
                                  houseNumber={address?.houseNumber} street={address?.street} town={address?.town}
                                  postalCode={address?.postalCode} countryCode={address?.countryCode}/>
+                <div className='separator'/>
 
                 {this.renderButtons()}
 

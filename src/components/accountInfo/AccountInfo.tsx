@@ -6,13 +6,13 @@ import './AccountInfo.css';
 import AccountInfoCard from "../accountInfoCard/AccountInfoCard";
 import {Link} from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import RoutableGrid from "../routableGrid/RoutableGrid";
-import {SearchCondition} from "../../gridomizer/domain/GridData";
-import {SEARCHTYPE} from "../../gridomizer/domain/GridConfig";
+import UserContext from "../../UserContext";
 import MessageBox from "../messageBox/MessageBox";
 import TransactionDialog from "../dialogs/transactionDialog/TransactionDialog";
 import SimpleDialog from "../dialogs/simpleDialog/SimpleDialog";
-import UserContext from "../../UserContext";
+import {SearchCondition} from "../../gridomizer/domain/GridData";
+import RoutableGrid from "../routableGrid/RoutableGrid";
+import {SEARCHTYPE} from "../../gridomizer/domain/GridConfig";
 
 interface AddressInfoProps{
     match : any,
@@ -154,11 +154,7 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
 
         const {user} : {user : UserData;} = this.context;
 
-
-
         let newCreditButton = null;
-
-
 
         const account : any = this.state.account;
 

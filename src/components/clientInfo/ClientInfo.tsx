@@ -131,6 +131,10 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
         this.setState({showAddNewAccountDialog : false});
     };
 
+    private openAddNewUserDialog = () : void => {
+        this.setState({showAddNewUserDialog : true});
+    };
+
     private openAddNewAccountDialog = () : void => {
         this.setState({showAddNewAccountDialog : true});
     };
@@ -139,9 +143,6 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
         this.setState({showAddNewUserDialog : false});
     };
 
-    private openAddNewUserDialog = () : void => {
-        this.setState({showAddNewUserDialog : true});
-    };
 
 
     componentDidMount(): void {
@@ -212,7 +213,6 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
 
         addressSearchConditions.push(idAddressSearchCondition);
 
-
         const accountSearchConditions : SearchCondition[] = [];
 
         const idAccountSearchCondition : SearchCondition = {searchType : SEARCHTYPE.EQUALS, fieldName : "clientId", value1 : this.props.match.params.clientID};
@@ -224,7 +224,6 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
         const documentSearchConditions : SearchCondition[] = [];
 
         const clientIdDocumentSearchConditions : SearchCondition = {searchType : SEARCHTYPE.EQUALS, fieldName : "clientId", value1 : this.props.match.params.clientID};
-
 
         documentSearchConditions.push(clientIdDocumentSearchConditions);
 

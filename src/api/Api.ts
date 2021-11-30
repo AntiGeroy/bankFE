@@ -23,6 +23,14 @@ export interface FetchAddressRequest {
     addressId : string
 }
 
+export interface FetchCardRequest {
+    cardId : string
+}
+
+export interface FetchCreditRequest {
+    creditId : string
+}
+
 export interface UpdateClientAddressRequest {
     addressId : string,
     clientId : string,
@@ -139,6 +147,11 @@ class Api {
     public static addNewTransaction = (request : any) : Promise<any> => {
         return instance.post('api/transakce/novy', request);
     };
+
+    public static fetchCardData = (request : FetchCardRequest) : Promise<any> => {
+        return instance.get('api/karty/' + request.cardId);
+    };
+
 
     public static fetchAccountData = (request : FetchAccountRequest) : Promise<any> => {
         return instance.get('api/ucty/' + request.accountId);
