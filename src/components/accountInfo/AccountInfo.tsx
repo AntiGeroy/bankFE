@@ -10,8 +10,8 @@ import RoutableGrid from "../routableGrid/RoutableGrid";
 import {SearchCondition} from "../../gridomizer/domain/GridData";
 import {SEARCHTYPE} from "../../gridomizer/domain/GridConfig";
 import MessageBox from "../messageBox/MessageBox";
-/*import TransactionDialog from "../dialogs/transactionDialog/TransactionDialog";
-import SimpleDialog from "../dialogs/simpleDialog/SimpleDialog";*/
+import TransactionDialog from "../dialogs/transactionDialog/TransactionDialog";
+import SimpleDialog from "../dialogs/simpleDialog/SimpleDialog";
 
 interface AddressInfoProps{
     match : any,
@@ -191,6 +191,31 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
                                  limit={account.limit}
                                  rate={account.rate}
                                  timePeriod={account.timePeriod}/>
+
+
+                {/*{this.renderButtons()}*/}
+
+                <div className='separator'/>
+                <RoutableGrid gridName='AccountCards' searchConditions={cardsSearchConditions} key={'ACGK-' + this.state.cardsGridKey} linkToRoute='cards/'/>
+                <div className='separator'/>
+                <RoutableGrid gridName='Transactions' searchConditions={transactionsSearchConditions} key={'TGK-' + this.state.transactionsGridKey}/>
+                <div className='separator'/>
+                {creditsGrid}
+                <div className='separator'/>
+                <TransactionDialog setKey={this.setTransactionsGridKey} open={this.state.showNewTransactionDialog}
+                                   setMessage={this.setMessage} setError={this.setError} fromAccountNumber={account.accountNumber}
+                                   handleClose={this.closeAddNewTransactionDialog}
+                                   setRemainder={this.setRemainder}
+                                   remainder={account.remainder}
+                />
+                <SimpleDialog open={this.state.showFreezeAccountDialog} title={"Zmražení účtu"}
+                              prompt={"Opravdu chcete tento účet zmrazit?"} handleOk={this.freezeAccount}
+                              handleCancel={this.closeFreezeAccountDialog}
+                />
+                <SimpleDialog open={this.state.showUnfreezeAccountDialog} title={"Rozmražení účtu"}
+                              prompt={"Opravdu chcete tento účet rozmrazit?"} handleOk={this.unfreezeAccount}
+                              handleCancel={this.closeUnfreezeAccountDialog}
+                />
             </div>
         );
 

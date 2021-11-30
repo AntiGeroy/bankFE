@@ -39,6 +39,10 @@ export interface UpdateClientAddressRequest {
 
 class Api {
 
+    public static addNewAccount = (request : any) : Promise<any> => {
+        return instance.post('api/ucty/novy', request);
+    };
+
     public static freezeCard = (request: {cardId : number}) : Promise<any> => {
         return instance.post("api/karty/zmrazit", request);
     };

@@ -23,6 +23,7 @@ interface ClientInfoState {
     showChangeDataDialog : boolean,
     showAddNewAddressDialog : boolean,
     showAddNewFileDialog : boolean,
+    showAddNewAccountDialog : boolean,
     message? : any
     addressesGridKey : number,
     filesGridKey : number
@@ -39,7 +40,9 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
             showAddNewAddressDialog : false,
             addressesGridKey: 1,
             filesGridKey: 1,
-            showAddNewFileDialog : false};
+            showAddNewFileDialog : false,
+            showAddNewAccountDialog : false
+        };
     }
 
     private generateRandomNumber = (min : number, max : number, except : number) =>  {
