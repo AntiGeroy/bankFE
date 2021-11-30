@@ -28,6 +28,98 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
         }
     }
 
+<<<<<<< Updated upstream
+=======
+    private onCloseMessageBox = () : void => {
+        this.setState({message : null})
+    };
+
+    private setMessage = (message : string) : void => {
+        this.setState({message : {message : message, type : "info"}})
+    };
+
+    private setRemainder = (newRemainder : number) : void => {
+        const account : any = this.state.account;
+        account.remainder = newRemainder;
+        this.setState({account : account});
+    };
+
+    private setError = (message : string) : void => {
+        this.setState({message : {message : message, type : "error"}})
+    };
+
+    private generateRandomNumber = (min : number, max : number, except : number) =>  {
+        let result : number;
+        do {
+            result = Math.floor(Math.random() * (max - min) + min);
+        } while (result === except);
+        return result;
+    };
+
+    private setCardsGridKey = () : void => {
+        const key = this.generateRandomNumber(1, 100, this.state.transactionsGridKey);
+        this.setState({cardsGridKey : key});
+    };
+
+    private setTransactionsGridKey = () : void => {
+        const key = this.generateRandomNumber(1, 100, this.state.transactionsGridKey);
+        this.setState({transactionsGridKey : key});
+    };
+
+    private closeAddNewTransactionDialog = () : void => {
+        this.setState({showNewTransactionDialog : false});
+    };
+
+    private openAddNewTransactionDialog = () : void => {
+        this.setState({showNewTransactionDialog : true});
+    };
+
+    private closeFreezeAccountDialog = () : void => {
+        this.setState({showFreezeAccountDialog : false});
+    };
+
+    private openFreezeAccountDialog = () : void => {
+        this.setState({showFreezeAccountDialog : true});
+    };
+
+    private closeUnfreezeAccountDialog = () : void => {
+        this.setState({showUnfreezeAccountDialog : false});
+    };
+
+    private openUnfreezeAccountDialog = () : void => {
+        this.setState({showUnfreezeAccountDialog : true});
+    };
+
+    private freezeAccount = () : void => {
+        const accountToFreeze : any = this.state.account;
+        Api.freezeAccount({accountId : accountToFreeze.accountId}).then(response => {
+            this.setMessage("Účet byl úspěšně zmražen");
+            accountToFreeze.state = "Dočasně zmražený účet";
+            console.error("ACCOUNT: ", accountToFreeze);
+            this.setState({account : accountToFreeze});
+        }).catch(error => {
+            this.setError("Při zmražení účtu došlo k chybě");
+        });
+
+        this.setCardsGridKey();
+        this.setState({showFreezeAccountDialog : false});
+    };
+
+    private unfreezeAccount = () : void => {
+        const accountToUnfreeze : any = this.state.account;
+        Api.unfreezeAccount({accountId : accountToUnfreeze.accountId}).then(response => {
+            this.setMessage("Účet byl úspěšně rozmražen");
+            accountToUnfreeze.state = "Aktivní účet";
+            console.error("ACCOUNT: ", accountToUnfreeze);
+            this.setState({account : accountToUnfreeze});
+        }).catch(error => {
+            this.setError("Při zmražení účtu došlo k chybě");
+        });
+
+        this.setCardsGridKey();
+        this.setState({showUnfreezeAccountDialog : false});
+    };
+>>>>>>> Stashed changes
 
     componentDidMount(): void {
         Api.fetchAccountData({accountId : this.props.match.params.accountId}).then( response => {
@@ -48,7 +140,29 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
 
         const account : any  = this.state.account;
 
+<<<<<<< Updated upstream
         console.error("FETCHED ACCOUNT: ", account);
+=======
+
+        const cardsSearchConditions : SearchCondition[] = [];
+
+        const idAccountSearchCondition : SearchCondition = {searchType : SEARCHTYPE.EQUALS,
+            fieldName : "accountId", value1 : this.props.match.params.accountId};
+
+        cardsSearchConditions.push(idAccountSearchCondition);
+
+        const transactionsSearchConditions : SearchCondition[] = [];
+        transactionsSearchConditions.push(idAccountSearchCondition);
+
+        const creditsSearchConditions : SearchCondition[] = [];
+        creditsSearchConditions.push(idAccountSearchCondition);
+
+        let creditsGrid : any = null;
+
+        if (account.accountType === "U") {
+            creditsGrid = <RoutableGrid gridName='Credits' searchConditions={creditsSearchConditions} key={'CGK-' + 1} linkToRoute={'uvery/'}/>;
+        }
+>>>>>>> Stashed changes
 
         return (
             <div className='accountInfo'>

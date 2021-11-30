@@ -101,6 +101,16 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
         this.setState({showAddNewAddressDialog : true});
     };
 
+<<<<<<< Updated upstream
+=======
+    private closeAddNewAccountDialog = () : void => {
+        this.setState({showAddNewAccountDialog : false});
+    };
+
+    private openAddNewAccountDialog = () : void => {
+        this.setState({showAddNewAccountDialog : true});
+    };
+>>>>>>> Stashed changes
 
     componentDidMount(): void {
         Api.fetchClientData({clientId : this.props.match.params.clientID}).then( response => {
@@ -146,7 +156,6 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
 
         addressSearchConditions.push(idAddressSearchCondition);
 
-
         const accountSearchConditions : SearchCondition[] = [];
 
         const idAccountSearchCondition : SearchCondition = {searchType : SEARCHTYPE.EQUALS, fieldName : "clientId", value1 : this.props.match.params.clientID};
@@ -158,7 +167,6 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
         const documentSearchConditions : SearchCondition[] = [];
 
         const clientIdDocumentSearchConditions : SearchCondition = {searchType : SEARCHTYPE.EQUALS, fieldName : "clientId", value1 : this.props.match.params.clientID};
-
 
         documentSearchConditions.push(clientIdDocumentSearchConditions);
 

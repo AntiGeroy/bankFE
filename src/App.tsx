@@ -12,6 +12,9 @@ import {SEARCHTYPE} from "./gridomizer/domain/GridConfig";
 import ClientInfo from "./components/clientInfo/ClientInfo";
 import AccountInfo from "./components/accountInfo/AccountInfo";
 import AddressInfo from "./components/addressInfo/AddressInfo";
+import CardInfo from "./components/cardInfo/CardInfo";
+import CreditInfo from "./components/creditInfo/CreditInfo";
+import StatisticsInfo from "./components/statistics/StatisticsInfo";
 
 
 function App() {
@@ -45,6 +48,21 @@ function App() {
                                     <ListItemText primary="Karty" className='links'/>
                                 </NavLink>
                             </ListItem>
+                            <ListItem>
+                                <NavLink to='/uvery'>
+                                    <ListItemText primary="Úvěry" className='links'/>
+                                </NavLink>
+                            </ListItem>
+                            <ListItem>
+                                <NavLink to='/statistiky'>
+                                    <ListItemText primary="Statistiky" className='links'/>
+                                </NavLink>
+                            </ListItem>
+                            <ListItem>
+                                <NavLink to='/logovani'>
+                                    <ListItemText primary="Logování" className='links'/>
+                                </NavLink>
+                            </ListItem>
                         </List>
                     </Grid>
                     <Grid item xs={9}>
@@ -52,11 +70,16 @@ function App() {
                             <Route path={'/klienti'} exact render={() => <RoutableGrid key='clientsGrid' gridName={'Clients'} linkToRoute='clients/'/>}/>
                             <Route path={'/ucty'} exact render={() => <RoutableGrid key='accountGrid' gridName={'Accounts'} linkToRoute='ucty/'/>}/>
                             <Route path={'/karty'} exact render={() => <RoutableGrid key='kartyGrid' gridName={'Cards'} linkToRoute='cards/'/>}/>
+                            <Route path={'/uvery'} exact render={() => <RoutableGrid key='uveryGrid' gridName={'Credits'} linkToRoute='uvery/'/>}/>
+                            <Route path={'/logovani'} exact render={() => <RoutableGrid key='logyGrid' gridName={'Logs'}/>}/>
+                            <Route path={'/statistiky'} exact render={() => StatisticsInfo}/>
                             <Route path={'/klientiSort'} exact render={() => <RoutableGrid key='klientiSortGrid' gridName={'Clients'} searchConditions={clientSearchConditions}/>}/>
                             <Route path={'/clients/:clientID'} component={ClientInfo}/>
                             <Route path={'/ucty/:accountId'} component={AccountInfo}/>
                             <Route path={'/api/dokumenty/:documentId'} component={BackendRedirect}/>
                             <Route path={'/addresses/:addressID'} component={AddressInfo}/>
+                            <Route path={'/cards/:cardID'} component={CardInfo}/>
+                            <Route path={'/uvery/:creditID'} component={CreditInfo}/>
                         </Switch>
                     </Grid>
                 </Grid>

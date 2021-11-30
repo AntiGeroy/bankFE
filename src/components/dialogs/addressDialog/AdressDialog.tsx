@@ -164,6 +164,7 @@ class AddressDialog extends React.Component<AddNewAddressDialogProps, AddNewAddr
     };
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | Iterable<React.ReactNode> | React.ReactPortal | boolean | null | undefined {
+
         const {houseNumberError, streetError, townError, postalCodeError, countryCodeError} = this.state;
 
         return (

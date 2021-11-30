@@ -1,5 +1,5 @@
 import  {GridDataRequest} from "../gridomizer/domain/GridData";
-import {Address, Client, ClientAddress, File} from "../Types";
+import {Address, Client, ClientAddress, Credit, File} from "../Types";
 
 const axios = require('axios').default;
 
@@ -23,6 +23,14 @@ export interface FetchAddressRequest {
     addressId : string
 }
 
+export interface FetchCardRequest {
+    cardId : string
+}
+
+export interface FetchCreditRequest {
+    creditId : string
+}
+
 export interface UpdateClientAddressRequest {
     addressId : string,
     clientId : string,
@@ -31,6 +39,37 @@ export interface UpdateClientAddressRequest {
 
 class Api {
 
+<<<<<<< Updated upstream
+=======
+    public static freezeCard = (request: {cardId : number}) : Promise<any> => {
+        return instance.post("api/karty/zmrazit", request);
+    };
+
+    public static unfreezeCard = (request: {cardId : number}) : Promise<any> => {
+        return instance.post("api/karty/rozmrazit", request);
+    };
+
+    public static terminateCard = (request: {cardId : number}) : Promise<any> => {
+        return instance.post("api/karty/terminovat", request);
+    };
+
+    public static fetchCreditData = (request : FetchCreditRequest) : Promise<any> => {
+        return instance.get('api/uvery/' + request.creditId);
+    };
+
+    public static updateCreditData = (request: Credit) : Promise<any> => {
+        return instance.put("api/uvery/" + request.creditId, request);
+    };
+
+    public static freezeAccount = (request : {accountId : number}) : Promise<any> => {
+      return instance.post("api/ucty/zmrazit", request);
+    };
+
+    public static unfreezeAccount = (request : {accountId : number}) : Promise<any> => {
+        return instance.post("api/ucty/rozmrazit", request);
+    };
+
+>>>>>>> Stashed changes
     public static fetchGridConfig = (request : FetchGridRequest) : Promise<any> => {
         return instance.get(("api/core/grids/" + request.gridName));
     };
@@ -43,6 +82,17 @@ class Api {
         return instance.get('api/klienti/' + request.clientId);
     };
 
+<<<<<<< Updated upstream
+=======
+    public static fetchCardData = (request : FetchCardRequest) : Promise<any> => {
+        return instance.get('api/karty/' + request.cardId);
+    };
+
+    public static addNewTransaction = (request : any) : Promise<any> => {
+        return instance.post('api/transakce/novy', request);
+    };
+
+>>>>>>> Stashed changes
     public static fetchAccountData = (request : FetchAccountRequest) : Promise<any> => {
         return instance.get('api/ucty/' + request.accountId);
     };

@@ -32,6 +32,29 @@ export interface Address {
     countryCode? : string;
 }
 
+export interface Card {
+    cardId : number,
+    accountId : number,
+    state : string,
+    cardNumber : number,
+    issueDate : string,
+    expirationDate : string,
+    ownerName : string,
+    ownerSurname : string,
+}
+
+export interface Credit{
+    creditId : number,
+    accountId : number,
+    issueDate : string,
+    remainder : number,
+    typeInfo : string,
+    timePeriodInfo : string,
+    numOfTimePeriods : number,
+    percentForTimePeriod : number,
+
+}
+
 export interface Account {
     accountNumber : number,
     stateInfo : string,
