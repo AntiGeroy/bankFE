@@ -1,7 +1,7 @@
 import React from "react";
 import {CircularProgress} from "@material-ui/core";
 import Api from "../../api/Api";
-import {Account, Address, UserData} from "../../Types";
+import {Account, Address} from "../../Types";
 import './AccountInfo.css';
 import AccountInfoCard from "../accountInfoCard/AccountInfoCard";
 import {Link} from "react-router-dom";
