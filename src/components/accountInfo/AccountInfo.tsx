@@ -15,6 +15,12 @@ interface AddressInfoProps{
 interface AccountInfoState {
     loading : boolean,
     account : Account | undefined,
+    message? : any,
+    transactionsGridKey : number,
+    cardsGridKey : number,
+    showNewTransactionDialog : boolean,
+    showFreezeAccountDialog : boolean,
+    showUnfreezeAccountDialog : boolean
 }
 
 
@@ -155,7 +161,6 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
         if (account.accountType === "U") {
             creditsGrid = <RoutableGrid gridName='Credits' searchConditions={creditsSearchConditions} key={'CGK-' + 1} linkToRoute={'uvery/'}/>;
         }
->>>>>>> Stashed changes
 
         return (
             <div className='accountInfo'>
