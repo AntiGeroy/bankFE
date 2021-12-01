@@ -19,6 +19,7 @@ interface CardInfoState{
     showFreezeCardDialog : boolean,
     showTerminateCardDialog : boolean,
     showUnfreezeCardDialog : boolean,
+    showButtons : boolean
 }
 
 class CardInfo extends React.Component<CardInfoProps, CardInfoState>{
@@ -30,6 +31,7 @@ class CardInfo extends React.Component<CardInfoProps, CardInfoState>{
             showFreezeCardDialog : false,
             showTerminateCardDialog : false,
             showUnfreezeCardDialog : false,
+            showButtons : false
         }
     }
 
@@ -115,14 +117,22 @@ class CardInfo extends React.Component<CardInfoProps, CardInfoState>{
     componentDidMount(): void {
         Api.fetchCardData({cardId : this.props.match.params.cardID}).then(response => {
             this.setState({
-                loading : false,
+                /*loading : false,*/
                 card : response.data
+            });
+            Api.fetchAccountData({accountId : response.data.accountId}).then(secondResponse => {
+                const showButtons = secondResponse.data.state !== "Terminovaný ucet";
+                this.setState({loading : false, showButtons : showButtons})
             })
         });
     }
 
     renderButtons(){
         const card : any = this.state.card;
+
+        if (card.state === "Terminovaná karta"){
+            return null;
+        }
 
         return (
         <div className='buttonBlockClientInfo'>

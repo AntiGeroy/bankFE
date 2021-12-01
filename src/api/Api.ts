@@ -142,6 +142,18 @@ class Api {
       return instance.post("api/ucty/zmrazit", request);
     };
 
+    public static newCard = (request : {accountId : number}) : Promise<any> => {
+        return instance.post("api/karty/nova", request);
+    };
+
+    public static newCredit = (request : any) : Promise<any> => {
+        return instance.post("api/uvery/novy", request);
+    };
+
+    public static terminateAccount = (request : {accountId : number}) : Promise<any> => {
+        return instance.post("api/ucty/terminovat", request);
+    };
+
     public static unfreezeAccount = (request : {accountId : number}) : Promise<any> => {
         return instance.post("api/ucty/rozmrazit", request);
     };

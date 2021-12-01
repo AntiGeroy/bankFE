@@ -173,6 +173,14 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
     renderButtons() {
         const {user} : {user : UserData;} = this.context;
 
+        let effectiveUser = {...user};
+
+        if (user.emulate){
+            effectiveUser.login = user.emulate.login;
+            effectiveUser.clientId = user.emulate.clientId;
+            effectiveUser.role = user.emulate.role;
+        }
+
         return (
           <div className='buttonBlockClientInfo'>
               <Button variant="contained" color="primary" onClick={this.openChangeClientDataDialog}>
@@ -182,15 +190,15 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
                   Přidat novou adresu
               </Button>
 
-              {user.role === 'ADMIN' ? <Button variant="contained" color="primary" onClick={this.openAddNewAccountDialog}>
+              {effectiveUser.role === 'ADMIN' ? <Button variant="contained" color="primary" onClick={this.openAddNewAccountDialog}>
                   Otevřit nový účet
               </Button> : null}
 
-              {user.role === 'ADMIN' ? <Button variant="contained" color="primary"  onClick={this.openAddNewFileDialog}>
+              {effectiveUser.role === 'ADMIN' ? <Button variant="contained" color="primary"  onClick={this.openAddNewFileDialog}>
                   Přidat nový dokument
               </Button> : null}
 
-              {user.role === 'ADMIN' ? <Button variant="contained" color="primary"  onClick={this.openAddNewUserDialog}>
+              {effectiveUser.role === 'ADMIN' ? <Button variant="contained" color="primary"  onClick={this.openAddNewUserDialog}>
                   Vytvořit nového uživatele
               </Button> : null}
 

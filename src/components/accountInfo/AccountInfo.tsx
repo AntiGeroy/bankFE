@@ -13,6 +13,7 @@ import SimpleDialog from "../dialogs/simpleDialog/SimpleDialog";
 import {SearchCondition} from "../../gridomizer/domain/GridData";
 import RoutableGrid from "../routableGrid/RoutableGrid";
 import {SEARCHTYPE} from "../../gridomizer/domain/GridConfig";
+import NewCreditDialog from "../dialogs/newCreditDialog/NewCreditDialog";
 
 interface AddressInfoProps{
     match : any,
@@ -24,9 +25,13 @@ interface AccountInfoState {
     message? : any,
     transactionsGridKey : number,
     cardsGridKey : number,
+    creditsGridKey : number,
     showNewTransactionDialog : boolean,
     showFreezeAccountDialog : boolean,
-    showUnfreezeAccountDialog : boolean
+    showUnfreezeAccountDialog : boolean,
+    showTerminateAccountDialog : boolean,
+    showAddNewCardDialog : boolean,
+    showAddNewCreditDialog : boolean
 }
 
 
@@ -41,11 +46,65 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
             loading : true,
             transactionsGridKey : 1,
             cardsGridKey : 1,
+            creditsGridKey : 1,
             showNewTransactionDialog : false,
             showFreezeAccountDialog : false,
-            showUnfreezeAccountDialog : false
+            showUnfreezeAccountDialog : false,
+            showTerminateAccountDialog : false,
+            showAddNewCardDialog : false,
+            showAddNewCreditDialog : false
         }
     }
+
+    private openAddNewCreditDialog = () : void => {
+        this.setState({showAddNewCreditDialog : true})
+    };
+
+    private closeAddNewCreditDialog = () : void => {
+        this.setState({showAddNewCreditDialog : false})
+    };
+
+    private openAddNewCardDialog = () : void => {
+        this.setState({showAddNewCardDialog : true})
+    };
+
+    private closeAddNewCardDialog = () : void => {
+        this.setState({showAddNewCardDialog : false})
+    };
+
+    private newCard = () : void => {
+        const account : any = this.state.account;
+        Api.newCard({accountId : account.accountId}).then(response => {
+            this.setMessage("Karta byla úspěšně přidana");
+        }).catch(error => {
+            this.setError("Při přidání karty došlo k chybě");
+        });
+
+        this.setCardsGridKey();
+        this.setState({showAddNewCardDialog : false});
+    };
+
+    private openTerminateAccountDialog = () : void => {
+        this.setState({showTerminateAccountDialog : true})
+    };
+
+    private closeTerminateAccountDialog = () : void => {
+        this.setState({showTerminateAccountDialog : false})
+    };
+
+    private terminateAccount = () : void => {
+        const accountToTerminate : any = this.state.account;
+        Api.terminateAccount({accountId : accountToTerminate.accountId}).then(response => {
+            this.setMessage("Účet byl úspěšně terminovan");
+            accountToTerminate.state = "Terminovaný ucet";
+            this.setState({account : accountToTerminate});
+        }).catch(error => {
+            this.setError("Při uzavření účtu došlo k chybě");
+        });
+
+        this.setCardsGridKey();
+        this.setState({showTerminateAccountDialog : false});
+    };
 
     private onCloseMessageBox = () : void => {
         this.setState({message : null})
@@ -62,7 +121,7 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
     };
 
     private setError = (message : string) : void => {
-        this.setState({message : {message : message, type : "error"}})
+        this.setState({message : {message : message, type : "errorTerminateAccountDialog"}})
     };
 
     private generateRandomNumber = (min : number, max : number, except : number) =>  {
@@ -83,6 +142,10 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
         this.setState({transactionsGridKey : key});
     };
 
+    private setCreditsGridKey = () : void => {
+        const key = this.generateRandomNumber(1, 100, this.state.creditsGridKey);
+        this.setState({creditsGridKey : key});
+    };
 
     private closeAddNewTransactionDialog = () : void => {
         this.setState({showNewTransactionDialog : false});
@@ -152,11 +215,17 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
 
     renderButtons() {
 
+        const account : any = this.state.account;
+
+        if (account.state === "Terminovaný ucet"){
+            return null;
+        }
+
         const {user} : {user : UserData;} = this.context;
 
         let newCreditButton = null;
 
-        const account : any = this.state.account;
+
 
         let effectiveUser = {...user};
 
@@ -167,7 +236,7 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
         }
 
         if (this.state.account?.accountType === 'U' && effectiveUser.role === 'ADMIN'){
-            newCreditButton = <Button variant="contained" color="primary">
+            newCreditButton = <Button variant="contained" color="primary" onClick={this.openAddNewCreditDialog}>
                 Nový úvěr
             </Button>
         }
@@ -186,11 +255,11 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
                     Rozmrazit účet
                 </Button>}
 
-                <Button variant="contained" color="primary">
+                <Button variant="contained" color="primary" onClick={this.openTerminateAccountDialog}>
                     Terminovat účet
                 </Button>
 
-                {account.state === "Aktivní účet" && effectiveUser.role === "ADMIN" ? <Button variant="contained" color="primary">
+                {account.state === "Aktivní účet" && effectiveUser.role === "ADMIN" ? <Button variant="contained" color="primary" onClick={this.openAddNewCardDialog}>
                     Nová karta
                 </Button> : null}
 
@@ -206,7 +275,6 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
         }
 
         const account : any  = this.state.account;
-
 
         const cardsSearchConditions : SearchCondition[] = [];
 
@@ -224,7 +292,7 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
         let creditsGrid : any = null;
 
         if (account.accountType === "U") {
-            creditsGrid = <RoutableGrid gridName='Credits' searchConditions={creditsSearchConditions} key={'CGK-' + 1} linkToRoute={'uvery/'}/>;
+            creditsGrid = <RoutableGrid gridName='Credits' searchConditions={creditsSearchConditions} key={'CGK-' + this.state.creditsGridKey} linkToRoute={'uvery/'}/>;
         }
 
         return (
@@ -274,6 +342,20 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
                               prompt={"Opravdu chcete tento účet rozmrazit?"} handleOk={this.unfreezeAccount}
                               handleCancel={this.closeUnfreezeAccountDialog}
                 />
+                <SimpleDialog open={this.state.showTerminateAccountDialog} title={"Uzavření účtu"}
+                              prompt={"Opravdu chcete tento účet terminovat? Operace je nenávratná."} handleOk={this.terminateAccount}
+                              handleCancel={this.closeTerminateAccountDialog}
+                />
+                <SimpleDialog open={this.state.showAddNewCardDialog} title={"Nová karta"}
+                              prompt={"Chcete otevřít novou kartu k účtu?"} handleOk={this.newCard}
+                              handleCancel={this.closeAddNewCardDialog}
+                />
+                <NewCreditDialog open={this.state.showAddNewCreditDialog} handleClose={this.closeAddNewCreditDialog}
+                                 setMessage={this.setMessage} setError={this.setError} setKey={this.setCreditsGridKey}
+                                 accountId={account.accountId}
+                />
+
+
             </div>
         );
 
