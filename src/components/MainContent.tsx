@@ -3,7 +3,7 @@ import UserContext from "../UserContext";
 import {Grid} from "@material-ui/core";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import {NavLink, Route, Switch} from "react-router-dom";
+import {NavLink, Route, Switch, useLocation} from "react-router-dom";
 import ListItemText from "@material-ui/core/ListItemText";
 import RoutableGrid from "./routableGrid/RoutableGrid";
 import ClientInfo from "./clientInfo/ClientInfo";
@@ -22,6 +22,9 @@ import UserInfo from "./userInfo/UserInfo";
 import StatisticsInfo from "./statistics/StatisticsInfo";
 import CreditInfo from "./creditInfo/CreditInfo";
 import CardInfo from "./cardInfo/CardInfo";
+import './MainContent.css';
+import {match} from "react-router";
+import Typography from "@material-ui/core/Typography";
 
 class BackendRedirect extends React.Component<any, any>{
     componentDidMount(): void {
@@ -37,14 +40,13 @@ const MainContent = (props : any) => {
 
     const {cookies} = props;
     const userCookie = cookies?.get('user');
+    const location = useLocation();
 
-    console.error("USER COOKIES: ", userCookie);
 
     // @ts-ignore
     let {user, setUser} : {user : UserData} = React.useContext(UserContext);
 
     if (user == null){
-        console.error("CONTEXT USER IS NULL, SETTING USER FROM COOKIE");
         if (userCookie){
             user = userCookie;
             setUser(user);
@@ -66,10 +68,6 @@ const MainContent = (props : any) => {
         effectiveUser.id = user.emulate.id
     }
 
-    //let userSearchConditions : SearchCondition[] = [];
-    /*userSearchConditions.push({searchType : SEARCHTYPE.EQUALS, fieldName : "role", value1 : "USER"});*/
-    /*userSearchConditions.push({searchType : SEARCHTYPE.EQUALS, fieldName : "active", value1 : "1"});*/
-
     let userSearchConditions : SearchCondition[] = [
         {searchType : SEARCHTYPE.EQUALS, fieldName : "role", value1 : "USER"},
         {searchType : SEARCHTYPE.CONTAINS, fieldName : "active", value1 : "1"}
@@ -77,6 +75,9 @@ const MainContent = (props : any) => {
 
     const content = <Grid item xs={9}>
         <Switch>
+            <Route path={'/'} exact render={() => <React.Fragment><Typography variant="subtitle2" gutterBottom className='noRoutePlaceholder'>
+                Zvolte položku menu
+            </Typography></React.Fragment>}/>
             <Route path={'/klienti'} exact render={() => <RoutableGrid key='clientsGrid' gridName={'Clients'} linkToRoute='clients/'/>}/>
             <Route path={'/ucty'} exact render={() => <RoutableGrid key='accountGrid' gridName={'AccountsWithName'} linkToRoute='ucty/'/>}/>
             <Route path={'/karty'} exact render={() => <RoutableGrid key='kartyGrid' gridName={'Cards'} linkToRoute='cards/'/>}/>
@@ -103,16 +104,19 @@ const MainContent = (props : any) => {
         </Switch>
     </Grid>;
 
+
+
+
     const userMenu = <Grid container>
         <Grid item xs={3}>
-            <List>
-                <ListItem>
-                    <NavLink to={'/clients/' + effectiveUser.clientId} >
+            <List >
+                <ListItem className={'mainContentLinkWrapper'}>
+                    <NavLink to={'/clients/' + effectiveUser.clientId} className={isActive => {return isActive ? 'mainContentLink activeMainContentLink' : 'mainContentLink'}}>
                         <ListItemText primary="Moje údaje" className='links'/>
                     </NavLink>
                 </ListItem>
                 <ListItem>
-                    <NavLink to={'/uzivatel/' + effectiveUser.id} >
+                    <NavLink to={'/uzivatel/' + effectiveUser.id} className={isActive => {return isActive ? 'mainContentLink activeMainContentLink' : 'mainContentLink'}} >
                         <ListItemText primary="Moje přihlašovací údaje" className='links'/>
                     </NavLink>
                 </ListItem>
@@ -123,35 +127,35 @@ const MainContent = (props : any) => {
 
     const adminMenu = <Grid container>
         <Grid item xs={3}>
-            <List>
+            <List className={'mainContentLinkWrapper'}>
                 <ListItem>
-                    <NavLink to='/klienti'>
+                    <NavLink to='/klienti' className={isActive => {return isActive ? 'mainContentLink activeMainContentLink' : 'mainContentLink'}}>
                         <ListItemText primary="Klienti" className='links'/>
                     </NavLink>
                 </ListItem>
                 <ListItem>
-                    <NavLink to='/ucty'>
+                    <NavLink to='/ucty' className={isActive => {return isActive ? 'mainContentLink activeMainContentLink' : 'mainContentLink'}}>
                         <ListItemText primary="Ǔčty" className='links'/>
                     </NavLink>
                 </ListItem>
                 <ListItem>
-                    <NavLink to='/karty'>
+                    <NavLink to='/karty' className={isActive => {return isActive ? 'mainContentLink activeMainContentLink' : 'mainContentLink'}}>
                         <ListItemText primary="Karty" className='links'/>
                     </NavLink>
                 </ListItem>
                 <ListItem>
-                    <NavLink to={'/uzivatele/'}>
+                    <NavLink to={'/uzivatele/'} className={isActive => {return isActive ? 'mainContentLink activeMainContentLink' : 'mainContentLink'}}>
                         <ListItemText primary="Uživatelé" className='links'/>
                     </NavLink>
                 </ListItem>
                 <ListItem>
-                    <NavLink to={'/logovani/'}>
+                    <NavLink to={'/logovani/'} className={isActive => {return isActive ? 'mainContentLink activeMainContentLink' : 'mainContentLink'}}>
                         <ListItemText primary="Logy" className='links'/>
                     </NavLink>
                 </ListItem>
                 <ListItem>
-                    <NavLink to={'/statistiky/'}>
-                        <ListItemText primary="Statistiky" className='links'/>
+                    <NavLink to={'/statistiky/'} className={isActive => {return isActive ? 'mainContentLink activeMainContentLink' : 'mainContentLink'}}>
+                        <ListItemText primary="Statistiky" className='links' />
                     </NavLink>
                 </ListItem>
             </List>

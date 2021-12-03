@@ -48,7 +48,6 @@ class UserInfo extends React.Component<UserInfoProps, UserInfoState> {
         }
 
         Api.getUserById(this.props.match.params.userId, actualUser.jwt).then(response => {
-            console.error("RESPONSE: ", response);
             const user = response.data;
             this.setState({
                 id : user.id,
@@ -101,7 +100,6 @@ class UserInfo extends React.Component<UserInfoProps, UserInfoState> {
 
         Api.resetUserPasswordById(this.props.match.params.userId, actualUser.jwt).then(result => {
             this.setMessage("Hesl bylo úspěšně resetovano");
-            this.setState({active : false});
         }).catch(error => {
             this.setError("Vyskytla se chyba");
         });
@@ -125,7 +123,7 @@ class UserInfo extends React.Component<UserInfoProps, UserInfoState> {
 
         Api.unblockUserById(this.props.match.params.userId, actualUser.jwt).then(result => {
             this.setMessage("Uživatel byl úspěšně odblokovan");
-            this.setState({active : false});
+            this.setState({active : true});
         }).catch(error => {
             this.setError("Vyskytla se chyba");
         });
@@ -172,7 +170,7 @@ class UserInfo extends React.Component<UserInfoProps, UserInfoState> {
               />
               {this.state.role === "USER" && effectiveUser.role === "ADMIN" ? <div className='buttonBlockClientInfo'>
 
-                  {this.state.active ? <Button variant="contained" color="primary" onClick={this.blockUser}>
+                  {Number(this.state.active) === 1 ? <Button variant="contained" color="primary" onClick={this.blockUser}>
                       Zablokovat uživatele
                   </Button> : <Button variant="contained" color="primary" onClick={this.unblockUser}>
                       Odblokovat uživatele
