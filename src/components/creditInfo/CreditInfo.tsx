@@ -5,8 +5,9 @@ import MessageBox from "../messageBox/MessageBox";
 import CreditInfoCard from "../creditInfoCard/CreditInfoCard";
 import Api from "../../api/Api";
 import Button from "@material-ui/core/Button";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import CreditDialog from "../dialogs/creditDialog/CreditDialog";
+import PayCreditDialog from "../dialogs/creditDialog/PayCreditDialog";
 
 interface CreditInfoProps{
     match : any,
@@ -17,8 +18,10 @@ interface CreditInfoState{
     loading : boolean,
     message? : any,
     credit? : Credit,
+    showRedirect : boolean,
     showChangeCreditInfoDialog : boolean,
     changeCreditDialogKey : number,
+    showPayCreditDialog : boolean
 
 }
 
@@ -29,6 +32,8 @@ class CreditInfo extends React.Component<CreditInfoProps, CreditInfoState>{
         this.state = {
             loading : true,
             showChangeCreditInfoDialog : false,
+            showPayCreditDialog : false,
+            showRedirect : false,
             changeCreditDialogKey : 1,
         }
     }
@@ -49,12 +54,24 @@ class CreditInfo extends React.Component<CreditInfoProps, CreditInfoState>{
         this.setState({message : {message : message, type : "error"}})
     };
 
+    private openShowRedirect = () : void => {
+        this.setState({showRedirect : true});
+    };
+
     private openChangeCreditInfoDialog = () : void => {
         this.setState({showChangeCreditInfoDialog : true});
     };
 
     private closeChangeCreditInfoDialog = () : void => {
         this.setState({showChangeCreditInfoDialog : false});
+    };
+
+    private openPayCreditDialog = () : void => {
+        this.setState({showPayCreditDialog : true});
+    };
+
+    private closePayCreditDialog = () : void => {
+        this.setState({showPayCreditDialog : false});
     };
 
     private setChangeCreditDialogKey = () : void => {
@@ -85,6 +102,9 @@ class CreditInfo extends React.Component<CreditInfoProps, CreditInfoState>{
             <Button variant="contained" color="primary" onClick={this.openChangeCreditInfoDialog}>
                 Editovat údaje
             </Button>
+            <Button variant="contained" color="primary" onClick={this.openPayCreditDialog}>
+                Zaplatit úvěr
+            </Button>
         </div>
         );
     }
@@ -105,7 +125,10 @@ class CreditInfo extends React.Component<CreditInfoProps, CreditInfoState>{
                     K účtu
                 </Button>
 
+                {this.state.showRedirect ? <Redirect to={{pathname : '/ucty/' + credit.accountId}} /> : null}
+
                 {this.state.message ? <MessageBox message={this.state.message.message} type={this.state.message.type} onClose={this.onCloseMessageBox}/> : null}
+
                 <CreditInfoCard creditId={credit?.creditId} accountId={credit?.accountId} issueDate={credit?.issueDate}
                                 remainder={credit?.remainder} typeInfo={credit?.typeInfo} timePeriodInfo={credit?.timePeriodInfo}
                                 numOfTimePeriods={credit?.numOfTimePeriods} percentForTimePeriod={credit?.percentForTimePeriod}
@@ -120,6 +143,10 @@ class CreditInfo extends React.Component<CreditInfoProps, CreditInfoState>{
                               setKey={this.setChangeCreditDialogKey} credit={credit}
                 />
 
+                <PayCreditDialog open={this.state.showPayCreditDialog} handleClose={this.closePayCreditDialog}
+                              setMessage={this.setMessage} setError={this.setError} setCredit={this.setCredit}
+                              setKey={this.setChangeCreditDialogKey} credit={credit} setShowRedirect={this.openShowRedirect}
+                />
             </div>
         );
     }

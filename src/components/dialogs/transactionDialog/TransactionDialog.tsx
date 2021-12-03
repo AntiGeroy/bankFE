@@ -48,7 +48,6 @@ class TransactionDialog extends React.Component<TransactionDialogProps, Transact
 
         Api.addNewTransaction(newTransactionRequest).then(response => {
             this.props.setMessage('Zadání transakce proběhlo úspěšně.');
-
         })
         .catch(error => {
             this.props.setError('Při zadání transakce došlo k chybě.');

@@ -11,7 +11,7 @@ import AccountInfo from "./accountInfo/AccountInfo";
 import AddressInfo from "./addressInfo/AddressInfo";
 import LoginForm from "./loginForm/LoginForm";
 import {UserData} from "../Types";
-import { withCookies, Cookies } from 'react-cookie';
+import { withCookies } from 'react-cookie';
 import Logout from "./logout/Logout";
 import UsersPage from "./usersPage/UsersPage";
 import {SearchCondition} from "../gridomizer/domain/GridData";
@@ -79,7 +79,7 @@ const MainContent = (props : any) => {
                 Zvolte položku menu
             </Typography></React.Fragment>}/>
             <Route path={'/klienti'} exact render={() => <RoutableGrid key='clientsGrid' gridName={'Clients'} linkToRoute='clients/'/>}/>
-            <Route path={'/ucty'} exact render={() => <RoutableGrid key='accountGrid' gridName={'AccountsWithName'} linkToRoute='ucty/'/>}/>
+            <Route path={'/ucty'} exact render={() => <RoutableGrid key='accountGrid' label={"Účty"} gridName={'AccountsWithName'} linkToRoute='ucty/'/>}/>
             <Route path={'/karty'} exact render={() => <RoutableGrid key='kartyGrid' gridName={'Cards'} linkToRoute='cards/'/>}/>
             <Route path={'/uzivatele'} exact component={UsersPage}/>
             <Route path={'/clients/:clientID'} component={ClientInfo}/>
@@ -96,16 +96,13 @@ const MainContent = (props : any) => {
             <Route path={'/emulateUser/:userID'} component={EmulateUser}/>
             <Route path={'/stopEmulate'} component={StopEmulate}/>
             <Route path={'/uzivatel/:userId'} component={UserInfo}/>
-            <Route path={'/logovani'} exact render={() => <RoutableGrid key='logyGrid' gridName={'Logs'}/>}/>
-            <Route path={'/statistiky'} exact render={() => StatisticsInfo}/>
+            <Route path={'/logovani'} exact render={() => <RoutableGrid key='logyGrid' label={"Logy"} gridName={'Logs'}/>}/>
+            <Route path={'/statistiky'} component={StatisticsInfo}/>
             <Route path={'/uvery'} exact render={() => <RoutableGrid key='uveryGrid' gridName={'Credits'} linkToRoute='uvery/'/>}/>
             <Route path={'/cards/:cardID'} component={CardInfo}/>
             <Route path={'/uvery/:creditID'} component={CreditInfo}/>
         </Switch>
     </Grid>;
-
-
-
 
     const userMenu = <Grid container>
         <Grid item xs={3}>
@@ -135,7 +132,7 @@ const MainContent = (props : any) => {
                 </ListItem>
                 <ListItem>
                     <NavLink to='/ucty' className={isActive => {return isActive ? 'mainContentLink activeMainContentLink' : 'mainContentLink'}}>
-                        <ListItemText primary="Ǔčty" className='links'/>
+                        <ListItemText primary="Účty" className='links'/>
                     </NavLink>
                 </ListItem>
                 <ListItem>

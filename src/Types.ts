@@ -67,6 +67,20 @@ export interface Account {
     timePeriod? : string
 }
 
+export interface Stats{
+    simpleAccCount : number,
+    savingAccCount : number,
+    creditAccCount : number,
+    avgCreditPerAcc : number,
+    avgCardPerAcc : number,
+    avgAccPerClient : number
+}
+
+export interface ProfitOnPeriod{
+    dateFrom : string,
+    dateTo : string
+}
+
 export enum Role {
     USER = "USER",
     ADMIN = "ADMIN"

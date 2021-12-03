@@ -31,6 +31,11 @@ export interface FetchCreditRequest {
     creditId : string
 }
 
+export interface FetchProfitRequest{
+    dateFrom : string,
+    dateTo : string
+}
+
 export interface UpdateClientAddressRequest {
     addressId : string,
     clientId : string,
@@ -40,6 +45,11 @@ export interface UpdateClientAddressRequest {
 export interface AuthRequest {
     username : string,
     password : string
+}
+
+export interface PayCreditRequest{
+    ucetId : number,
+    amount : number,
 }
 
 export type UserRole = 'ADMIN' | 'USER';
@@ -134,6 +144,8 @@ class Api {
         return instance.put("api/uvery/" + request.creditId, request);
     };
 
+
+
     public static authenticateUser = (request : AuthRequest): Promise<any> => {
         return instance.post("api/auth/login", request);
     };
@@ -180,10 +192,13 @@ class Api {
         return instance.post('api/transakce/novy', request);
     };
 
+    public static payCredit = (request : any) : Promise<any> => {
+        return instance.post("api/uvery/platba", request);
+    };
+
     public static fetchCardData = (request : FetchCardRequest) : Promise<any> => {
         return instance.get('api/karty/' + request.cardId);
     };
-
 
     public static fetchAccountData = (request : FetchAccountRequest) : Promise<any> => {
         return instance.get('api/ucty/' + request.accountId);
@@ -228,6 +243,20 @@ class Api {
     public static fetchClientsOnAddress = (request : FetchAddressRequest) : Promise<any> => {
         return instance.get('api/klienti/batch/' + request.addressId);
     };
+
+    public static fetchAccountStats = () : Promise<any> => {
+        return instance.get('api/stats/account');
+    };
+
+    public static fetchTotalBankCapital = () : Promise<any> => {
+        return instance.get('api/stats/capital');
+    };
+
+    public static fetchProfitOnPeriod = (request : FetchProfitRequest) : Promise<any> => {
+        console.log("FPR : ", request);
+        return instance.get('api/stats/profit/' + request.dateFrom + '/' + request.dateTo);
+    };
+
 }
 
 export default Api;

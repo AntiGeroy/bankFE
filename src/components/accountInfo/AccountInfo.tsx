@@ -121,7 +121,7 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
     };
 
     private setError = (message : string) : void => {
-        this.setState({message : {message : message, type : "errorTerminateAccountDialog"}})
+        this.setState({message : {message : message, type : "error"}})
     };
 
     private generateRandomNumber = (min : number, max : number, except : number) =>  {
@@ -176,7 +176,6 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
         Api.freezeAccount({accountId : accountToFreeze.accountId}).then(response => {
             this.setMessage("Účet byl úspěšně zmražen");
             accountToFreeze.state = "Dočasně zmražený účet";
-            console.error("ACCOUNT: ", accountToFreeze);
             this.setState({account : accountToFreeze});
         }).catch(error => {
             this.setError("Při zmražení účtu došlo k chybě");
@@ -191,7 +190,6 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
         Api.unfreezeAccount({accountId : accountToUnfreeze.accountId}).then(response => {
             this.setMessage("Účet byl úspěšně rozmražen");
             accountToUnfreeze.state = "Aktivní účet";
-            console.error("ACCOUNT: ", accountToUnfreeze);
             this.setState({account : accountToUnfreeze});
         }).catch(error => {
             this.setError("Při zmražení účtu došlo k chybě");
@@ -290,9 +288,11 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
         creditsSearchConditions.push(idAccountSearchCondition);
 
         let creditsGrid : any = null;
+        let payedCreditsGrid : any = null;
 
         if (account.accountType === "U") {
-            creditsGrid = <RoutableGrid gridName='Credits' searchConditions={creditsSearchConditions} key={'CGK-' + this.state.creditsGridKey} linkToRoute={'uvery/'}/>;
+            creditsGrid = <RoutableGrid gridName='Credits' label={"Úvěry"} searchConditions={creditsSearchConditions} key={'CGK-' + this.state.creditsGridKey} linkToRoute={'uvery/'}/>;
+            payedCreditsGrid = <RoutableGrid gridName='PayedCredits' label={"Zaplacené úvěry"} searchConditions={creditsSearchConditions} key={'PCGK-' + 1}/>;
         }
 
         return (
@@ -324,9 +324,11 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
                 <div className='separator'/>
                 <RoutableGrid gridName='AccountCards' searchConditions={cardsSearchConditions} key={'ACGK-' + this.state.cardsGridKey} linkToRoute='cards/'/>
                 <div className='separator'/>
-                <RoutableGrid gridName='Transactions' searchConditions={transactionsSearchConditions} key={'TGK-' + this.state.transactionsGridKey}/>
-                <div className='separator'/>
                 {creditsGrid}
+                {account.accountType === "U" ? <div className='separator'/> : null}
+                {payedCreditsGrid}
+                {account.accountType === "U" ? <div className='separator'/> : null}
+                <RoutableGrid gridName='Transactions' searchConditions={transactionsSearchConditions} key={'TGK-' + this.state.transactionsGridKey}/>
                 <div className='separator'/>
                 <TransactionDialog setKey={this.setTransactionsGridKey} open={this.state.showNewTransactionDialog}
                                    setMessage={this.setMessage} setError={this.setError} fromAccountNumber={account.accountNumber}
