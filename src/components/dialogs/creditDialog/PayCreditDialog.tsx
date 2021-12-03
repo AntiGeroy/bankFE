@@ -7,13 +7,12 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import DialogActions from "@material-ui/core/DialogActions";
-import MenuItem from "@material-ui/core/MenuItem";
-import {Select} from "@material-ui/core";
 import Api from "../../../api/Api";
 
-interface CreditDialogProps{
+interface PayCreditDialogProps{
     open : boolean,
     handleClose : any,
+    setShowRedirect : any,
     setMessage : any,
     setError : any,
     setCredit : any,
@@ -21,32 +20,31 @@ interface CreditDialogProps{
     credit : Credit,
 }
 
-interface CreditDialogState{
+interface PayCreditDialogState{
     fields : Credit,
-    selectedTimePeriod : string,
+    amount : number,
     amountError : string,
 }
 
-class CreditDialog extends React.Component<CreditDialogProps, CreditDialogState>{
+class PayCreditDialog extends React.Component<PayCreditDialogProps, PayCreditDialogState>{
 
-    constructor(props : CreditDialogProps, context : any) {
+    constructor(props : PayCreditDialogProps, context : any) {
         super(props, context);
 
         this.state = {
             fields : this.props.credit,
-            selectedTimePeriod : this.props.credit.timePeriodInfo,
             amountError : "",
-
+            amount : 0,
         };
     }
 
     validate = () : any => {
         let remainderError = '';
 
-        if(isNaN(this.state.fields.remainder)) {
-            remainderError = "Zůstatek pro úhradu musí být číslo."
-        }else if(this.state.fields.remainder < 0) {
-            remainderError = "Zůstatek pro úhradu nesmí byt záporný."
+        if(isNaN(this.state.amount)) {
+            remainderError = "Častka pro úhradu musí být číslo."
+        }else if(this.state.amount < 0) {
+            remainderError = "Častka pro úhradu nesmí byt záporný."
         }
 
         return {
@@ -55,48 +53,61 @@ class CreditDialog extends React.Component<CreditDialogProps, CreditDialogState>
     };
 
     onSubmit = () : void => {
-
         const remainderError = this.validate();
+        const credit : Credit =  this.state.fields;
+
+        const PayCreditRequest = {
+            accountId : this.state.fields.accountId,
+            creditId : this.state.fields.creditId,
+            amount : this.state.amount
+        };
+
         if(remainderError.length > 0){
             this.setState({
                 amountError : remainderError,
             }, () => {this.forceUpdate()});
         } else {
-            Api.updateCreditData(this.state.fields).then(response => {
-                this.props.setMessage('Úvěr byl úspěšně změněn.');
+            Api.payCredit(PayCreditRequest).then(response => {
+                this.props.setMessage('Částka ' + PayCreditRequest.amount + ' byla úspěšně zaplacena.');
                 this.props.setKey();
-                this.props.setCredit(response.data);
+                credit.remainder = (credit.remainder - PayCreditRequest.amount) < 0 ? 0 : (credit.remainder - PayCreditRequest.amount);
+                if(credit.remainder === 0){
+                    this.props.setShowRedirect(true);
+                }
+                this.props.setCredit(credit);
             }).catch(error => {
-                this.props.setError('Došlo k chybě při změně úvěru');
+                this.props.setError('Došlo k chybě při zaplaceni.');
             });
             this.props.handleClose();
         }
     };
 
-    setRemainder = (event: React.ChangeEvent<HTMLInputElement>) : void => {
-        this.setState({fields : {...this.state.fields, remainder : Number(event.target.value)}, amountError : ''});
+
+    setAmount = (event: React.ChangeEvent<HTMLInputElement>) : void => {
+        this.setState({amount: Number(event.target.value), amountError : ''});
     };
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | Iterable<React.ReactNode> | React.ReactPortal | boolean | null | undefined {
 
+
         return(
             <Dialog open={this.props.open} onClose={this.props.handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Editace úvěru</DialogTitle>
+                <DialogTitle id="form-dialog-title">Úhrada úvěru</DialogTitle>
                 <DialogContent>
 
                     <DialogContentText>
-                        Zadejte údaje pro editace úvěru
+                        Zadejte častku pro uhrazení úvěru
                     </DialogContentText>
 
                     <TextField
                         autoFocus
                         margin="dense"
                         id="remainder"
-                        label="Zbyvající částka"
+                        label="Částka"
                         type="text"
                         fullWidth
-                        value={this.state.fields.remainder}
-                        onChange={this.setRemainder}
+                        value={this.state.amount}
+                        onChange={this.setAmount}
                         error={this.state.amountError.length > 0}
                         helperText={this.state.amountError}
                     />
@@ -108,10 +119,10 @@ class CreditDialog extends React.Component<CreditDialogProps, CreditDialogState>
                             fields : this.props.credit,
                         }, () => {this.props.handleClose()})}}
                             color="secondary">
-                        Zahodit změny
+                        Zahodit platbu
                     </Button>
                     <Button onClick={this.onSubmit} color="primary">
-                        Potvrdit změny
+                        Potvrdit platbu
                     </Button>
                 </DialogActions>
 
@@ -120,4 +131,4 @@ class CreditDialog extends React.Component<CreditDialogProps, CreditDialogState>
     }
 }
 
-export default CreditDialog;
+export default PayCreditDialog;

@@ -78,7 +78,7 @@ const MainContent = (props : any) => {
     const content = <Grid item xs={9}>
         <Switch>
             <Route path={'/klienti'} exact render={() => <RoutableGrid key='clientsGrid' gridName={'Clients'} linkToRoute='clients/'/>}/>
-            <Route path={'/ucty'} exact render={() => <RoutableGrid key='accountGrid' gridName={'AccountsWithName'} linkToRoute='ucty/'/>}/>
+            <Route path={'/ucty'} exact render={() => <RoutableGrid key='accountGrid' label={"Účty"} gridName={'AccountsWithName'} linkToRoute='ucty/'/>}/>
             <Route path={'/karty'} exact render={() => <RoutableGrid key='kartyGrid' gridName={'Cards'} linkToRoute='cards/'/>}/>
             <Route path={'/uzivatele'} exact component={UsersPage}/>
             <Route path={'/clients/:clientID'} component={ClientInfo}/>
@@ -95,8 +95,8 @@ const MainContent = (props : any) => {
             <Route path={'/emulateUser/:userID'} component={EmulateUser}/>
             <Route path={'/stopEmulate'} component={StopEmulate}/>
             <Route path={'/uzivatel/:userId'} component={UserInfo}/>
-            <Route path={'/logovani'} exact render={() => <RoutableGrid key='logyGrid' gridName={'Logs'}/>}/>
-            <Route path={'/statistiky'} exact render={() => StatisticsInfo}/>
+            <Route path={'/logovani'} exact render={() => <RoutableGrid key='logyGrid' label={"Logy"} gridName={'Logs'}/>}/>
+            <Route path={'/statistiky'} component={StatisticsInfo}/>
             <Route path={'/uvery'} exact render={() => <RoutableGrid key='uveryGrid' gridName={'Credits'} linkToRoute='uvery/'/>}/>
             <Route path={'/cards/:cardID'} component={CardInfo}/>
             <Route path={'/uvery/:creditID'} component={CreditInfo}/>
@@ -131,7 +131,7 @@ const MainContent = (props : any) => {
                 </ListItem>
                 <ListItem>
                     <NavLink to='/ucty'>
-                        <ListItemText primary="Ǔčty" className='links'/>
+                        <ListItemText primary="Účty" className='links'/>
                     </NavLink>
                 </ListItem>
                 <ListItem>
