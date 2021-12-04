@@ -63,7 +63,6 @@ export default class Grid extends React.Component<Props, State> {
     private fetchGridConfigAndDataAtInit = () => {
         const functions = this.props.functions;
         if (functions === undefined) {
-            console.error("Property functions is undefined")
             return;
         }
         if (functions.fetchGridConfig) {
@@ -77,7 +76,6 @@ export default class Grid extends React.Component<Props, State> {
                 this.fetchGridData(undefined, config.defaultSortConditions, config.defaultRowsCount, 0)
             });
         } else {
-            console.error("Grid: fetchGridConfig and fetchGridConfigAsync are null")
         }
     }
 
@@ -92,7 +90,6 @@ export default class Grid extends React.Component<Props, State> {
     private fetchGridData = (searchConditions? : SearchCondition[], sortConditions? : SortCondition[], count? : number, offset? : number) => {
         const functions = this.props.functions;
         if (functions === undefined) {
-            console.error("Property functions is undefined")
             return;
         }
         let gridData = this.state.gridData
@@ -102,14 +99,9 @@ export default class Grid extends React.Component<Props, State> {
         let currentSort = sortConditions ? sortConditions : gridData.sortConditions;
         let currentSearch = searchConditions ? searchConditions : gridData.searchConditions;
 
-        console.error("Initial search conditions: ", this.props.initialSearchConditions);
-
         if (this.props.initialSearchConditions && this.props.initialSearchConditions.length > 0){
-            console.error("ADDING PARAMETERS");
             currentSearch = currentSearch.concat(this.props.initialSearchConditions);
         }
-
-        console.error("SEARCH CONDITIONS: ", currentSearch);
 
         let request : GridDataRequest = { count : currentCount , offset : currentOffset, searchConditions :  currentSearch, sortConditions : currentSort }
 
@@ -121,7 +113,6 @@ export default class Grid extends React.Component<Props, State> {
                 this.setState({gridData : data, searchConditions : currentSearch, sortConditions : currentSort})
             });
         } else {
-            console.error("Grid: fetchGridData and fetchGridDataAsync are null")
         }
     }
 
@@ -178,11 +169,9 @@ export default class Grid extends React.Component<Props, State> {
     }
 
     private onAdd = () => {
-        console.error("onAdd")
     }
 
     private onDelete = () => {
-        console.error("onDelete")
     }
 
     private onSelectRow = (rowId : any, selected : boolean) => {
@@ -193,7 +182,6 @@ export default class Grid extends React.Component<Props, State> {
             selectedRows = selectedRows.filter(r => Number(r !== rowId));
         }
         this.setState({selectedRows : selectedRows});
-        console.error(selectedRows)
     }
 
     private onSelectAll = (selected : boolean) => {

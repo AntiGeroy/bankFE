@@ -239,8 +239,6 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
             </Button>
         }
 
-        console.error("ACCOUNT: ", account);
-
         return (
             <div className='buttonBlockClientInfo'>
                 {account.state === "Aktivní účet" && effectiveUser.role === "USER"? <Button variant="contained" color="primary" onClick={this.openAddNewTransactionDialog}>

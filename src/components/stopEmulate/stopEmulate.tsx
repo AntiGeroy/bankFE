@@ -20,10 +20,8 @@ class StopEmulate extends React.Component<any, any>{
         if (!user){
             return;
         }
-        console.error("OLD USER DATA: ", user);
         const {setUser} = this.context;
         user.emulate = undefined;
-        console.error("NEW USER DATA: ", user);
         setUser(user);
         this.setState({loading : false});
         const {cookies} = this.props;

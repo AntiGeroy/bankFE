@@ -1,5 +1,5 @@
 import React from "react";
-import {Credit} from "../../Types";
+import {Credit, UserData} from "../../Types";
 import {CircularProgress} from "@material-ui/core";
 import MessageBox from "../messageBox/MessageBox";
 import CreditInfoCard from "../creditInfoCard/CreditInfoCard";
@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import {Link, Redirect} from "react-router-dom";
 import CreditDialog from "../dialogs/creditDialog/CreditDialog";
 import PayCreditDialog from "../dialogs/creditDialog/PayCreditDialog";
+import UserContext from "../../UserContext";
 
 interface CreditInfoProps{
     match : any,
@@ -26,6 +27,8 @@ interface CreditInfoState{
 }
 
 class CreditInfo extends React.Component<CreditInfoProps, CreditInfoState>{
+
+    static contextType = UserContext;
 
     constructor(props: CreditInfoProps, context: any) {
         super(props, context);
@@ -97,14 +100,31 @@ class CreditInfo extends React.Component<CreditInfoProps, CreditInfoState>{
     }
 
     renderButtons(){
+
+        const {user} : {user : UserData;} = this.context;
+
+        let effectiveUser = {...user};
+
+        if (user.emulate){
+            effectiveUser.id = user.emulate.id;
+            effectiveUser.login = user.emulate.login;
+            effectiveUser.clientId = user.emulate.clientId;
+            effectiveUser.role = user.emulate.role;
+        }
+
+        if (!effectiveUser){
+            return <Redirect to='/'/>
+        }
+
+
+
         return(
         <div className='buttonBlockClientInfo'>
-            <Button variant="contained" color="primary" onClick={this.openChangeCreditInfoDialog}>
+            {effectiveUser.role === "ADMIN" ? <Button variant="contained" color="primary" onClick={this.openChangeCreditInfoDialog}>
                 Editovat údaje
-            </Button>
-            <Button variant="contained" color="primary" onClick={this.openPayCreditDialog}>
+            </Button> : <Button variant="contained" color="primary" onClick={this.openPayCreditDialog}>
                 Zaplatit úvěr
-            </Button>
+            </Button>}
         </div>
         );
     }

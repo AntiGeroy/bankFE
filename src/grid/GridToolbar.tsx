@@ -117,7 +117,6 @@ const GridToolbar: React.FC<Props> = (props: Props) => {
     }
 
     const onSearch = () => {
-        console.error("CLICL")
         props.onSearch(props.columns, searchTerm, searchTerm);
     }
 

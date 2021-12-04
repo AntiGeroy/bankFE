@@ -10,9 +10,7 @@ class Logout extends React.Component<any, any>{
     componentDidMount(): void {
         const {cookies} = this.props;
         cookies?.remove('user');
-        console.error("LOGOUT CONTEXT: ", this.context);
         const {setUser} = this.context;
-        console.error("SET USER: ", setUser);
         setUser(null);
     }
 

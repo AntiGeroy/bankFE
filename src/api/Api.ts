@@ -253,7 +253,6 @@ class Api {
     };
 
     public static fetchProfitOnPeriod = (request : FetchProfitRequest) : Promise<any> => {
-        console.log("FPR : ", request);
         return instance.get('api/stats/profit/' + request.dateFrom + '/' + request.dateTo);
     };
 

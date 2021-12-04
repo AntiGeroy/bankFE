@@ -204,7 +204,6 @@ const GridTableHeaderCell: React.FC<HeaderCellElementProps> = (props) => {
                 active={sortDirection !== undefined}
                 direction={sortDirection}
                 onClick={e => {
-                    console.error("TableSortLabel", new Date())
                     props.onSortClick(nextSort)
                 }}
             >
@@ -247,7 +246,6 @@ const formatValue = (value: any, valueType: VALUETYPE, contentType: CONTENTTYPE)
         return "-"
     }
     if (contentType === CONTENTTYPE.URL) {
-        console.error("Rendering url with value + ", value);
         return (
             <IconButton onClick={() => window.open('http://localhost:8080' + value, '_blank')} style={{padding: 0}} key={1}>
                 <LinkIcon/>

@@ -51,14 +51,12 @@ class AddressClientDialog extends React.Component<AddressClientDialogProps, Addr
 
         if(!this.state.clients) rows = this.props.clients;
         else rows = this.state.clients;
-        console.log("STATE CLIENTS: ", this.state.clients);
 
         const addressId : any = this.props.address.addressId;
 
         let selectionModel: (string | number)[] = rows.filter((r) => r !== undefined && r !== null)
             .filter((r) => r.active > 0)
             .map((r) => r.clientId);
-        console.log("SELECTION MODEL: ", rows);
 
         return (
             <Dialog  open={this.props.open} onClose={this.props.handleClose} aria-labelledby="form-dialog-title">
@@ -84,11 +82,9 @@ class AddressClientDialog extends React.Component<AddressClientDialogProps, Addr
 
                                   if(remove.length === 1) {
                                       const client : ClientAddress = {clientId : Number(remove[0]), addressId: addressId, active: 0};
-                                      console.log("REMOVE: ", client);
                                       Api.updateClientAddressState(client);
                                   } else if(add.length === 1){
                                       const client : ClientAddress = {clientId : Number(add[0]), addressId: addressId, active: 1};
-                                      console.log("ADD: ", client);
                                       Api.updateClientAddressState(client);
                                   }
                               }}

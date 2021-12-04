@@ -45,19 +45,6 @@ const Navbar = (props : any) => {
     // @ts-ignore
     let {user} : {user : UserData} = React.useContext(UserContext);
 
-
-    if (user){
-        console.error("ROLE: ", user.role);
-        if (user.role === "ADMIN"){
-            console.error("USER IS ADMIN");
-        }
-        else {
-            console.error("USER IS NOT ADMIN");
-        }
-    }
-
-
-
     return (
         <div className='navbarWrapper'>
 

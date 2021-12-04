@@ -241,10 +241,6 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
 
         const client : any  = this.state.client;
 
-
-
-        console.error("CLIENT: ", client);
-
         return (
             <div className='clientInfo'>
                     {this.state.message ? <MessageBox message={this.state.message.message} type={this.state.message.type} onClose={this.onCloseMessageBox}/> : null}

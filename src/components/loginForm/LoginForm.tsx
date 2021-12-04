@@ -74,12 +74,10 @@ class LoginForm extends Component<any, any>{
 
         Api.authenticateUser({username : this.state.fields.login.value.trim(), password : this.state.fields.pass.value.trim()})
             .then(response => {
-                console.error("RESPONSE: ", response);
-
                 const data = response.data;
                 const headers = response.headers;
 
-                if (!data.active){
+                if (Number(data.active) === 0){
                     this.setError("Uživatel byl zablokován.");
                     return;
                 }
@@ -95,10 +93,8 @@ class LoginForm extends Component<any, any>{
                 };
 
                 const {setUser} = this.context;
-                console.error("user : ", user);
                 setUser(user);
                 const {cookies} = this.props;
-                console.error("SAVING COOKIES: ", cookies);
                 cookies.set('user', user, {maxAge : 60 * 60});
 
             }).catch(error => {this.setError("Špatné údaje.")});

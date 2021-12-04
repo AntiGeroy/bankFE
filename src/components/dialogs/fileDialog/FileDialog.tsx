@@ -61,8 +61,6 @@ class FileDialog extends React.Component<FileDialogProps, FileDialogState>{
     };
 
     setContent = (event: React.ChangeEvent<HTMLInputElement>) : void => {
-        console.error("content: ", event.target.value);
-
         this.setState({fields : {...this.state.fields, content : event.target.value}, fileError : ''});
     };
 
@@ -102,31 +100,7 @@ class FileDialog extends React.Component<FileDialogProps, FileDialogState>{
             }, () => {return});
         }
         else{
-
-            console.error("REF: ", this.state.fileInputRef.current);
-
-            /*const fileReader = new FileReader();
-
-            fileReader.onload = () => {
-                console.error("RESULT", fileReader.result);
-                const modifiedFileData : File = this.state.fields;
-                //const fileData : any = modifiedFileData.content;
-                modifiedFileData.content = null;
-
-                Api.saveNewDocument(modifiedFileData, fileReader.result).then(response => {
-                    this.props.setMessage('Dokument byl úspěšně vložen');
-                }).catch(error => {
-                    this.props.setError('Došlo k chybě při vložení dokumentu');
-                });
-
-                this.props.handleClose();
-            };
-
-            const fileData = fileReader.readAsBinaryString(this.state.fileInputRef.current.files[0]);*/
-
-
             const modifiedFileData : File = this.state.fields;
-            //const fileData : any = modifiedFileData.content;
             modifiedFileData.content = null;
 
             Api.saveNewDocument(modifiedFileData, this.state.fileInputRef.current.files[0]).then(response => {
