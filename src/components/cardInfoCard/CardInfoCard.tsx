@@ -16,7 +16,7 @@ interface CardInfoCardProps {
     ownerSurname : string,
 }
 
-
+//komponenta reprezentující kartu informaci o bankovní kártě
 const CardInfoCard = (props : CardInfoCardProps) => {
     return (
         <Card className='clientCardInfo'>

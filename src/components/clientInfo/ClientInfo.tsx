@@ -37,6 +37,7 @@ interface ClientInfoState {
     redirectToMain : boolean
 }
 
+//třída reprezentující informace o klientovi
 class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
 
     static contextType = UserContext;
@@ -240,6 +241,14 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
         }
 
         const client : any  = this.state.client;
+        const {user} : {user : UserData;} = this.context;
+
+        let effectiveUser = {...user};
+        if (user.emulate){
+            effectiveUser.login = user.emulate.login;
+            effectiveUser.clientId = user.emulate.clientId;
+            effectiveUser.role = user.emulate.role;
+        }
 
         return (
             <div className='clientInfo'>
@@ -247,7 +256,10 @@ class ClientInfo extends React.Component<ClientInfoProps, ClientInfoState>{
                     <ClientInfoCard id={client?.id} name={client?.name} surname={client?.surname} birthNumber={client?.birthNumber} phoneNumber={client?.phoneNumber}/>
                     {this.renderButtons()}
                     <div className='separator'/>
-                    <RoutableGrid gridName='Addresses' searchConditions={addressSearchConditions} key={'AGK-' + this.state.addressesGridKey} linkToRoute='addresses/'/>
+                    {effectiveUser.role === 'ADMIN' ? <RoutableGrid gridName='Addresses' searchConditions={addressSearchConditions}
+                                                                    key={'AGK-' + this.state.addressesGridKey} linkToRoute='addresses/'/>
+                                                                    : <RoutableGrid gridName='Addresses' searchConditions={addressSearchConditions} key={'AGK-' + this.state.addressesGridKey}/>}
+                    {/*<RoutableGrid gridName='Addresses' searchConditions={addressSearchConditions} key={'AGK-' + this.state.addressesGridKey} linkToRoute='addresses/'/>*/}
                     <div className='separator'/>
                     <RoutableGrid gridName='Accounts' searchConditions={accountSearchConditions} key={'ACGK-' + this.state.accountGridKey} linkToRoute={'ucty/'}/>
                     <div className='separator'/>

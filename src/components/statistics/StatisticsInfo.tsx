@@ -22,6 +22,7 @@ interface StatisticsInfoState{
     showCalculateProfitDialog : boolean,
 }
 
+//třída reprezentující informace o statistikach
 class StatisticsInfo extends React.Component<StatisticsInfoProps, StatisticsInfoState>{
 
     constructor(props: StatisticsInfoProps, context : any) {

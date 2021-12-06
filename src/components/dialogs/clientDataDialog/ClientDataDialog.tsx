@@ -27,6 +27,7 @@ interface ChangeClientDataDialogState {
     birthNumberError : string,
 }
 
+//třída reprezentující formulář pro změnu uživatelských údajů
 class ClientDataDialog extends React.Component<ChangeClientDataDialogProps, ChangeClientDataDialogState>{
 
     state = {

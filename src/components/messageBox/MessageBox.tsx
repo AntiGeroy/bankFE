@@ -11,6 +11,7 @@ export interface MessageBoxProps {
     onClose : any
 }
 
+//komponenta reprezentující hlášku
 const MessageBox = (props : MessageBoxProps) => {
 
     const classes : string[] =  ['messageBox'];

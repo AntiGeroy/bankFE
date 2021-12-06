@@ -22,6 +22,7 @@ interface CardInfoState{
     showButtons : boolean
 }
 
+//třída reprezentující informace o kartě
 class CardInfo extends React.Component<CardInfoProps, CardInfoState>{
 
     constructor(props: CardInfoProps, context: any) {

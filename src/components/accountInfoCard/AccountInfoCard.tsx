@@ -18,6 +18,7 @@ interface AccountInfoCardProps {
     key : string
 }
 
+//třída reprezentující kartu informaci o účtu
 class AccountInfoCard extends React.Component<AccountInfoCardProps, any>{
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | Iterable<React.ReactNode> | React.ReactPortal | boolean | null | undefined {

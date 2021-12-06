@@ -12,6 +12,7 @@ interface StatisticsInfoCardProps {
 
 }
 
+//komponenta reprezentující kartu informace o statistikach
 const StatisticsInfoCard = (props : StatisticsInfoCardProps) => {
     return (
         <Card className='statisticsInfoCard'>

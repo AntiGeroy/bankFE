@@ -31,6 +31,7 @@ interface FileDialogState {
     fileInputRef : any
 }
 
+//třída reprezentující formulář pro vložení nového dokumentu
 class FileDialog extends React.Component<FileDialogProps, FileDialogState>{
 
     constructor(props: FileDialogProps, context: any) {

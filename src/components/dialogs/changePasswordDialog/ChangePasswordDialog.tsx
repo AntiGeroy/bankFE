@@ -1,5 +1,5 @@
 import React from "react";
-import {Client, UserData} from "../../../Types";
+import {UserData} from "../../../Types";
 import Api from "../../../api/Api";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -10,6 +10,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import UserContext from "../../../UserContext";
 
+//třída reprezentující formulář pro změnu hesla
 class ChangePasswordDialog extends React.Component<any, any>{
 
     static contextType = UserContext;

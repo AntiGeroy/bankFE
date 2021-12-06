@@ -15,6 +15,7 @@ interface AddressInfoCardProps {
     countryCode : string;
 }
 
+//třída reprezentující kartu informaci o adresě
 const AddressInfoCard = (props : AddressInfoCardProps) => {
     return (
         <Card className='addressInfoCard'>

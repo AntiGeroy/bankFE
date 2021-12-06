@@ -16,7 +16,7 @@ interface CreditInfoCard {
     percentForTimePeriod : number,
 }
 
-
+//komponenta reprezentující kartu informaci o úvěru
 const CreditInfoCard = (props : CreditInfoCard) => {
     return (
         <Card className='clientCardInfo'>

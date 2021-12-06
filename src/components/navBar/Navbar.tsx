@@ -5,6 +5,7 @@ import {UserData} from "../../Types";
 import UserContext from "../../UserContext";
 
 
+//navigační komponenta
 const Navbar = (props : any) => {
 
     const [scrolled,setScrolled]=React.useState(false);

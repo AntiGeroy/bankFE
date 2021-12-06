@@ -11,6 +11,7 @@ import Button from "@material-ui/core/Button";
 import UserContext from "../../../UserContext";
 import {withCookies} from "react-cookie";
 
+//třída reprezentující formulář pro vytváření nového spravce
 class NewAdminUserDialog extends React.Component<any, any>{
 
     static contextType = UserContext;

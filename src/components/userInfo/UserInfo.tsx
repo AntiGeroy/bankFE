@@ -26,7 +26,7 @@ interface UserInfoState {
     id? : number | null
 }
 
-
+//třída reprezentující informace o uživateli
 class UserInfo extends React.Component<UserInfoProps, UserInfoState> {
 
     static contextType = UserContext;

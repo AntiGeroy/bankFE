@@ -27,6 +27,7 @@ interface AccountDialogState {
     timePeriodId? : number
 }
 
+//třída reprezentující editační formulář pro účet
 class AccountDialog extends React.Component<AccountDialogProps, AccountDialogState>{
 
     constructor(props: AccountDialogProps, context: any) {
@@ -37,9 +38,6 @@ class AccountDialog extends React.Component<AccountDialogProps, AccountDialogSta
 
 
     onSubmit = () : void => {
-        /*const modifiedAddressData : Address = {...this.state.fields, clientId : this.props.address.clientId};
-        Api.createNewAddress(modifiedAddressData).then(response => {this.props.setMessage('Nová adresa byla úspěšné přidana.');
-        this.props.setKey();}).catch(error => {this.props.setError('Při vložení adresy došlo k chybě');});*/
         const newAccount : any = {
             clientId : this.props.clientId,
             accountType : this.state.selectedType,

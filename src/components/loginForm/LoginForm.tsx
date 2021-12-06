@@ -10,6 +10,7 @@ import MessageBox from "../messageBox/MessageBox";
 import { withCookies, Cookies } from 'react-cookie';
 import './LoginForm.css';
 
+//třída zodpovědná za přihlašování
 class LoginForm extends Component<any, any>{
 
     static contextType = UserContext;

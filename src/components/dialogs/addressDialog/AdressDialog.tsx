@@ -28,6 +28,7 @@ interface AddNewAddressDialogState {
     countryCodeError : string;
 }
 
+//třída reprezentující editační formulář pro adresu
 class AddressDialog extends React.Component<AddNewAddressDialogProps, AddNewAddressDialogState>{
 
     constructor(props: AddNewAddressDialogProps, context: any) {

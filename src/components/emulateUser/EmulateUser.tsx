@@ -14,6 +14,7 @@ interface EmilateUserState {
     loading : boolean
 }
 
+//třída zodpovědná za emulování úživatele
 class EmulateUser extends React.Component<any, any>{
 
     static contextType = UserContext;

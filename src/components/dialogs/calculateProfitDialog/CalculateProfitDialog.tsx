@@ -1,5 +1,4 @@
 import React from "react";
-import {Client, Credit, UserData} from "../../../Types";
 import Api from "../../../api/Api";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -9,6 +8,7 @@ import TextField from "@material-ui/core/TextField";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 
+//třída reprezentující formulář pro výběr období
 class CalculateProfitDialog extends React.Component<any, any>{
 
     state = {

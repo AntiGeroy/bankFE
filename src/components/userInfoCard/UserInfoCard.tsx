@@ -13,6 +13,7 @@ interface UserInfoCardProps {
     key : string
 }
 
+//třída reprezentující kartu informaci o uživateli
 class UserInfoCard extends React.Component<UserInfoCardProps, any>{
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | Iterable<React.ReactNode> | React.ReactPortal | boolean | null | undefined {

@@ -27,6 +27,7 @@ interface CreditDialogState{
     amountError : string,
 }
 
+//třída reprezentující formulář pro změnu častky úvěru
 class CreditDialog extends React.Component<CreditDialogProps, CreditDialogState>{
 
     constructor(props : CreditDialogProps, context : any) {

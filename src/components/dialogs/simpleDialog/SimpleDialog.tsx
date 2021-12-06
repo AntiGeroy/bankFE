@@ -15,6 +15,7 @@ interface SimpleDialogProps {
     handleCancel : any
 }
 
+//třída reprezentující jednoduchý dvoutlačitkový pořvrzovací dialog
 class SimpleDialog extends React.Component<SimpleDialogProps, any>{
 
 

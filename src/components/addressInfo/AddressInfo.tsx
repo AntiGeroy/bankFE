@@ -26,6 +26,7 @@ interface AddressInfoState{
     message? : any
 }
 
+//třída reprezentující informace o adresě
 class AddressInfo extends React.Component<AddressInfoProps, AddressInfoState>{
 
     constructor(props: AddressInfoProps, context: any) {
@@ -153,7 +154,7 @@ class AddressInfo extends React.Component<AddressInfoProps, AddressInfoState>{
 
                 <div className='separator'/>
 
-                <RoutableGrid gridName='ClientAddresses' searchConditions={addressClientSearchConditions}
+                <RoutableGrid gridName='ClientAddresses' label={"Klienti adresy"} searchConditions={addressClientSearchConditions}
                               linkToRoute={'clients/' + this.state.address?.clientId}/>
 
                 <div className='separator'/>

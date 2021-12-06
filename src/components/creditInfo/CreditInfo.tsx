@@ -26,6 +26,7 @@ interface CreditInfoState{
 
 }
 
+//třída reprezentující informace o úvěru
 class CreditInfo extends React.Component<CreditInfoProps, CreditInfoState>{
 
     static contextType = UserContext;

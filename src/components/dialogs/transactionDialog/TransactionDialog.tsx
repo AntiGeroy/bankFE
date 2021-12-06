@@ -27,7 +27,7 @@ interface TransactionDialogState {
     timePeriodId : number
 }
 
-
+//třída reprezentující formulář pro provedení transakce
 class TransactionDialog extends React.Component<TransactionDialogProps, TransactionDialogState>{
 
     constructor(props: TransactionDialogProps, context: any) {

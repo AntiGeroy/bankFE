@@ -34,7 +34,7 @@ interface AccountInfoState {
     showAddNewCreditDialog : boolean
 }
 
-
+//třída reprezentující informace o účtu
 class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
 
     static contextType = UserContext;

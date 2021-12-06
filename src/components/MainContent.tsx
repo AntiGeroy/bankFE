@@ -36,6 +36,7 @@ class BackendRedirect extends React.Component<any, any>{
     }
 }
 
+//komponenta obsahující navigační logiku aplikace
 const MainContent = (props : any) => {
 
     const {cookies} = props;

@@ -5,6 +5,7 @@ import {CircularProgress} from "@material-ui/core";
 import {Redirect} from "react-router";
 import {withCookies} from "react-cookie";
 
+//třída zodpovědna za zastavení emulování uživatele
 class StopEmulate extends React.Component<any, any>{
 
     static contextType = UserContext;

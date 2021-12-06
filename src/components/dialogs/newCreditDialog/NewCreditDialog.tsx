@@ -24,6 +24,7 @@ interface NewCreditDialogState {
     amount? : string,
 }
 
+//třída reprezentující formulář pro vydání nového úvěru
 class NewCreditDialog extends React.Component<NewCreditDialogProps, NewCreditDialogState>{
 
     constructor(props: NewCreditDialogProps, context: any) {

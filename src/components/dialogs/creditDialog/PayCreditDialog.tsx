@@ -26,6 +26,7 @@ interface PayCreditDialogState{
     amountError : string,
 }
 
+//třída reprezentující formulář pro zaplacení úvěru
 class PayCreditDialog extends React.Component<PayCreditDialogProps, PayCreditDialogState>{
 
     constructor(props : PayCreditDialogProps, context : any) {

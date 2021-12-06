@@ -14,6 +14,7 @@ interface ClientInfoCardProps {
     birthNumber : string;
 }
 
+//komponenta reprezentující kartu informace o klientovi
 const ClientInfoCard = (props : ClientInfoCardProps) => {
     return (
         <Card className='clientCardInfo'>

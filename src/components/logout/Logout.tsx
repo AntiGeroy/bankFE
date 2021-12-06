@@ -3,6 +3,7 @@ import { withCookies, Cookies } from 'react-cookie';
 import {Redirect} from "react-router";
 import UserContext from "../../UserContext";
 
+//třída zodpovědná za odhlášení
 class Logout extends React.Component<any, any>{
 
     static contextType = UserContext;
