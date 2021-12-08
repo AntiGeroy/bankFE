@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import UserContext from "../../UserContext";
 import {Redirect} from "react-router";
-import {Grid, TextField, Typography} from "@material-ui/core";
+import {Card, Grid, TextField, Typography} from "@material-ui/core";
 import AlertDialog from "../alertDialog/AlertDialog";
 import Button from "@material-ui/core/Button";
 import AddBoxIcon from '@material-ui/icons/AddBox';
@@ -9,6 +9,9 @@ import Api from "../../api/Api";
 import MessageBox from "../messageBox/MessageBox";
 import { withCookies, Cookies } from 'react-cookie';
 import './LoginForm.css';
+import CardContent from "@material-ui/core/CardContent";
+import {default as MUIGrid} from "@material-ui/core/Grid/Grid";
+import CardHeader from "@material-ui/core/CardHeader";
 
 //třída zodpovědná za přihlašování
 class LoginForm extends Component<any, any>{
@@ -144,6 +147,46 @@ class LoginForm extends Component<any, any>{
         return (
             <Grid container item xs={12} md={10}>
                 <div className='registrationForm'>
+                    <Card className='registrationFormInfo'>
+                        <CardHeader title='Kontaktní údaje:'/>
+                        <CardContent>
+                            <MUIGrid container>
+                                <MUIGrid item xs ={2}>
+                                    <Typography color="textSecondary" gutterBottom>
+                                        Adresa:
+                                    </Typography>
+                                </MUIGrid>
+                                <MUIGrid item xs ={10}>
+                                    <Typography color="textPrimary" gutterBottom>
+                                        221B Baker Street, London
+                                    </Typography>
+                                </MUIGrid>
+
+                                <MUIGrid item xs ={2}>
+                                    <Typography color="textSecondary" gutterBottom>
+                                        Číslo:
+                                    </Typography>
+                                </MUIGrid>
+                                <MUIGrid item xs ={10}>
+                                    <Typography color="textPrimary" gutterBottom>
+                                        +44 20 7234 3456
+                                    </Typography>
+                                </MUIGrid>
+
+                                <MUIGrid item xs ={2}>
+                                    <Typography color="textSecondary" gutterBottom>
+                                        Email:
+                                    </Typography>
+                                </MUIGrid>
+                                <MUIGrid item xs ={10}>
+                                    <Typography color="textPrimary" gutterBottom>
+                                        nejlepsi.banka@gmail.com
+                                    </Typography>
+                                </MUIGrid>
+                            </MUIGrid>
+                        </CardContent>
+                    </Card>
+                    <div className='separator'/>
                     <Grid item xs={false} md={3}/>
                     {this.state.message ? <MessageBox message={this.state.message.message} type={this.state.message.type} onClose={this.onCloseMessageBox}/> : null}
                     {this.renderForm()}

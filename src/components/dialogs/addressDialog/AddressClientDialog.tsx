@@ -92,7 +92,7 @@ class AddressClientDialog extends React.Component<AddressClientDialogProps, Addr
                     </div>
                 </DialogContent>
 
-                <DialogActions >
+                <DialogActions>
                     <Button onClick={() => {
                         Api.fetchClientsOnAddress({addressId : addressId}).then(response => {
                             this.setState(

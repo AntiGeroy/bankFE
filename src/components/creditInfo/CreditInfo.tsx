@@ -117,8 +117,6 @@ class CreditInfo extends React.Component<CreditInfoProps, CreditInfoState>{
             return <Redirect to='/'/>
         }
 
-
-
         return(
         <div className='buttonBlockClientInfo'>
             {effectiveUser.role === "ADMIN" ? <Button variant="contained" color="primary" onClick={this.openChangeCreditInfoDialog}>

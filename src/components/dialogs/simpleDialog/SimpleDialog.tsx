@@ -12,7 +12,7 @@ interface SimpleDialogProps {
     title : string,
     prompt : string,
     handleOk : any,
-    handleCancel : any
+    handleCancel : any,
 }
 
 //třída reprezentující jednoduchý dvoutlačitkový pořvrzovací dialog

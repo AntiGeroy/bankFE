@@ -99,7 +99,7 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
             accountToTerminate.state = "Terminovaný ucet";
             this.setState({account : accountToTerminate});
         }).catch(error => {
-            this.setError("Při uzavření účtu došlo k chybě");
+            this.setError("Při uzavření účtu došlo k chybě : nenulový zustatek.");
         });
 
         this.setCardsGridKey();

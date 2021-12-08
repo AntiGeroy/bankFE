@@ -25,6 +25,7 @@ import CardInfo from "./cardInfo/CardInfo";
 import './MainContent.css';
 import {match} from "react-router";
 import Typography from "@material-ui/core/Typography";
+import RecommendationsInfo from "./recommendationsInfo/RecommendationsInfo";
 
 class BackendRedirect extends React.Component<any, any>{
     componentDidMount(): void {
@@ -102,6 +103,7 @@ const MainContent = (props : any) => {
             <Route path={'/uvery'} exact render={() => <RoutableGrid key='uveryGrid' gridName={'Credits'} linkToRoute='uvery/'/>}/>
             <Route path={'/cards/:cardID'} component={CardInfo}/>
             <Route path={'/uvery/:creditID'} component={CreditInfo}/>
+            <Route path={'/prani'} component={RecommendationsInfo}/>
         </Switch>
     </Grid>;
 
@@ -116,6 +118,11 @@ const MainContent = (props : any) => {
                 <ListItem>
                     <NavLink to={'/uzivatel/' + effectiveUser.id} className={isActive => {return isActive ? 'mainContentLink activeMainContentLink' : 'mainContentLink'}} >
                         <ListItemText primary="Moje přihlašovací údaje" className='links'/>
+                    </NavLink>
+                </ListItem>
+                <ListItem>
+                    <NavLink to={'/prani/'} className={isActive => {return isActive ? 'mainContentLink activeMainContentLink' : 'mainContentLink'}}>
+                        <ListItemText primary="Kníha přání" className='links' />
                     </NavLink>
                 </ListItem>
             </List>
@@ -154,6 +161,11 @@ const MainContent = (props : any) => {
                 <ListItem>
                     <NavLink to={'/statistiky/'} className={isActive => {return isActive ? 'mainContentLink activeMainContentLink' : 'mainContentLink'}}>
                         <ListItemText primary="Statistiky" className='links' />
+                    </NavLink>
+                </ListItem>
+                <ListItem>
+                    <NavLink to={'/prani/'} className={isActive => {return isActive ? 'mainContentLink activeMainContentLink' : 'mainContentLink'}}>
+                        <ListItemText primary="Kníha přání" className='links' />
                     </NavLink>
                 </ListItem>
             </List>
