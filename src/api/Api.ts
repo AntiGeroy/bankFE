@@ -36,6 +36,11 @@ export interface FetchProfitRequest{
     dateTo : string
 }
 
+export interface ImageUpload {
+    userId : number,
+    image : string
+}
+
 export interface UpdateClientAddressRequest {
     addressId : string,
     clientId : string,
@@ -73,6 +78,11 @@ class Api {
         };
 
         return instance.post("api/auth/changePassword/" , request, config);
+    };
+
+    public static uploadImage = (request : ImageUpload) : Promise<any> => {
+
+        return instance.post("api/auth/changeImage/", request);
     };
 
     // backendový GET požadavek pro blokování úživatele podle ID

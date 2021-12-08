@@ -38,7 +38,7 @@ class AccountInfoCard extends React.Component<AccountInfoCardProps, any>{
                 <CardContent>
                     <MUIGrid container>
 
-                        <MUIGrid item xs ={2}>
+                        <MUIGrid item xs={2}>
                             <Typography color="textSecondary" gutterBottom>
                                 Číslo účtu:
                             </Typography>

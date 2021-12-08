@@ -96,6 +96,7 @@ export interface UserData {
     role : Role,
     clientId? : number,
     jwt : string,
-    emulate? : UserData
+    emulate? : UserData,
+    image : any
 }
 

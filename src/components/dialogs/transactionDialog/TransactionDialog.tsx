@@ -48,13 +48,14 @@ class TransactionDialog extends React.Component<TransactionDialogProps, Transact
 
         Api.addNewTransaction(newTransactionRequest).then(response => {
             this.props.setMessage('Zadání transakce proběhlo úspěšně.');
+            this.props.setRemainder(this.props.remainder - Number(this.state.amount));
         })
         .catch(error => {
             this.props.setError('Při zadání transakce došlo k chybě.');
         });
 
         this.props.setKey();
-        this.props.setRemainder((this.props.remainder - Number(this.state.amount)) > 0 ? (this.props.remainder - Number(this.state.amount)) : 0);
+        //this.props.setRemainder((this.props.remainder - Number(this.state.amount)) > 0 ? (this.props.remainder - Number(this.state.amount)) : 0);
         this.props.handleClose();
     };
 

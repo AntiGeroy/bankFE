@@ -251,9 +251,9 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
                     Rozmrazit účet
                 </Button>}
 
-                <Button variant="contained" color="primary" onClick={this.openTerminateAccountDialog}>
+                {account.state === "Aktivní účet" && effectiveUser.role === "ADMIN" ? <Button variant="contained" color="primary" onClick={this.openTerminateAccountDialog}>
                     Terminovat účet
-                </Button>
+                </Button> : null}
 
                 {account.state === "Aktivní účet" && effectiveUser.role === "ADMIN" ? <Button variant="contained" color="primary" onClick={this.openAddNewCardDialog}>
                     Nová karta

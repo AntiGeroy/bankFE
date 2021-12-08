@@ -23,7 +23,9 @@ interface UserInfoState {
     active? : boolean | null
     message? : any,
     showChangePasswordDialog : boolean,
-    id? : number | null
+    id? : number | null,
+    user? : UserData | null | undefined,
+    infoCardKey : number,
 }
 
 //třída reprezentující informace o uživateli
@@ -35,9 +37,23 @@ class UserInfo extends React.Component<UserInfoProps, UserInfoState> {
         super(props, context);
         this.state = {
             loading : true,
-            showChangePasswordDialog : false
+            showChangePasswordDialog : false,
+            infoCardKey : 1
         }
     }
+
+    private generateRandomNumber = (min : number, max : number, except : number) =>  {
+        let result : number;
+        do {
+            result = Math.floor(Math.random() * (max - min) + min);
+        } while (result === except);
+        return result;
+    };
+
+    private setInfoCardKey = () : void => {
+        const key = this.generateRandomNumber(1, 100, this.state.infoCardKey);
+        this.setState({infoCardKey : key});
+    };
 
     componentDidMount(): void {
         const {user} : {user : UserData;} = this.context;
@@ -54,7 +70,8 @@ class UserInfo extends React.Component<UserInfoProps, UserInfoState> {
                 login : user.login,
                 role : user.role,
                 registeredByLogin : user.registeredByLogin,
-                active : user.active
+                active : user.active,
+                user : user,
             });
 
             if (user.role === 'ADMIN'){
@@ -129,6 +146,23 @@ class UserInfo extends React.Component<UserInfoProps, UserInfoState> {
         });
     };
 
+    private setUser = (user : UserData) : void => {
+
+        console.error("SETTING USER DATA : ", user);
+
+        let reader = new FileReader();
+        reader.onloadend = () => {
+            this.setState({id : user.id,
+                login : user.login,
+                role : user.role,
+                user : {...user, image : reader.result}
+            });
+        };
+        reader.readAsDataURL(user.image);
+
+        this.setInfoCardKey();
+    };
+
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | Iterable<React.ReactNode> | React.ReactPortal | boolean | null | undefined {
 
         const {user} : {user : UserData;} = this.context;
@@ -166,7 +200,14 @@ class UserInfo extends React.Component<UserInfoProps, UserInfoState> {
                             login={this.state.login ? this.state.login :''}
                             createdBy={this.state.registeredByLogin}
                             clientName={this.state.clientName}
-                            key={'UIC'}
+                            setMessage={this.setMessage}
+                            setError={this.setError}
+                            user={this.state.user}
+                            setUser={this.setUser}
+                            userId={Number(this.state.id)}
+                            image={this.state.user?.image}
+                            key={'UIC-' + this.state.infoCardKey}
+
               />
               {this.state.role === "USER" && effectiveUser.role === "ADMIN" ? <div className='buttonBlockClientInfo'>
 
