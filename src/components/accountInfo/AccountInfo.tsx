@@ -99,7 +99,7 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
             accountToTerminate.state = "Terminovaný ucet";
             this.setState({account : accountToTerminate});
         }).catch(error => {
-            this.setError("Při uzavření účtu došlo k chybě");
+            this.setError("Při uzavření účtu došlo k chybě : nenulový zustatek.");
         });
 
         this.setCardsGridKey();
@@ -251,9 +251,9 @@ class AccountInfo extends React.Component<AddressInfoProps, AccountInfoState>{
                     Rozmrazit účet
                 </Button>}
 
-                <Button variant="contained" color="primary" onClick={this.openTerminateAccountDialog}>
+                {account.state === "Aktivní účet" && effectiveUser.role === "ADMIN" ? <Button variant="contained" color="primary" onClick={this.openTerminateAccountDialog}>
                     Terminovat účet
-                </Button>
+                </Button> : null}
 
                 {account.state === "Aktivní účet" && effectiveUser.role === "ADMIN" ? <Button variant="contained" color="primary" onClick={this.openAddNewCardDialog}>
                     Nová karta

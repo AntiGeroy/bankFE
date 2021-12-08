@@ -22,6 +22,13 @@ export interface ClientAddress {
     active : number
 }
 
+export interface Recommendation{
+    recommendationId: number,
+    subject: string,
+    text: string,
+    status : string,
+}
+
 export interface Address {
     addressId? : number,
     clientId : number,

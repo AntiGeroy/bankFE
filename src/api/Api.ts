@@ -52,6 +52,17 @@ export interface PayCreditRequest{
     amount : number,
 }
 
+export interface RecommendationsRequest {
+    ids : number[]
+}
+
+export interface NewRecommendationRequest{
+    recommendationId : number,
+    subject : string,
+    text : string,
+    status : string
+}
+
 export type UserRole = 'ADMIN' | 'USER';
 
 export interface NewUserRequest {
@@ -288,6 +299,23 @@ class Api {
     // backendový GET požadavek pro ziskání údajů o získu bánky za uvedené období
     public static fetchProfitOnPeriod = (request : FetchProfitRequest) : Promise<any> => {
         return instance.get('api/stats/profit/' + request.dateFrom + '/' + request.dateTo);
+    };
+
+    // backendový GET požadavek pro ziskání všech přáni
+    public static fetchRecommendationData = () : Promise<any> => {
+        return instance.get('api/prani/get');
+    };
+
+    public static declineRecommendations = (request : RecommendationsRequest) : Promise<any> => {
+        return instance.post('api/prani/decline', request);
+    };
+
+    public static approveRecommendations = (request : RecommendationsRequest) : Promise<any> => {
+        return instance.post('api/prani/approve', request);
+    };
+
+    public static addNewRecommendation = (request : NewRecommendationRequest) : Promise<any> => {
+        return instance.post('api/prani/nove', request);
     };
 
 }

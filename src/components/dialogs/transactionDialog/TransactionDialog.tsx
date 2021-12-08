@@ -24,7 +24,8 @@ interface TransactionDialogProps {
 interface TransactionDialogState {
     toAccountNumber : string,
     amount : string,
-    timePeriodId : number
+    timePeriodId : number,
+    accountNumberError : string,
 }
 
 //třída reprezentující formulář pro provedení transakce
@@ -32,30 +33,43 @@ class TransactionDialog extends React.Component<TransactionDialogProps, Transact
 
     constructor(props: TransactionDialogProps, context: any) {
         super(props, context);
-        this.state = {toAccountNumber : '', amount : '', timePeriodId : 0}
+        this.state = {toAccountNumber : '', amount : '', timePeriodId : 0, accountNumberError : ''}
     }
 
+    validate = () : string => {
+        let accountNumberError = '';
+        if(this.state.toAccountNumber.length < 12){
+            accountNumberError = 'Číslo účtu musí obsahovat 12 čísel'
+        }
+        return accountNumberError;
+    };
 
     onSubmit = () : void => {
+        const accountNumberError : string = this.validate();
+        if(accountNumberError.length > 0){
+            this.setState({accountNumberError : accountNumberError}, () => this.forceUpdate())
+        }
+        else {
 
-        const newTransactionRequest : any = {
-            fromAccountNumber : this.props.fromAccountNumber,
-            toAccountNumber : this.state.toAccountNumber,
-            amount : this.state.amount,
-            timePeriodId : this.state.timePeriodId
-        };
+            const newTransactionRequest: any = {
+                fromAccountNumber: this.props.fromAccountNumber,
+                toAccountNumber: this.state.toAccountNumber,
+                amount: this.state.amount,
+                timePeriodId: this.state.timePeriodId
+            };
 
 
-        Api.addNewTransaction(newTransactionRequest).then(response => {
-            this.props.setMessage('Zadání transakce proběhlo úspěšně.');
-        })
-        .catch(error => {
-            this.props.setError('Při zadání transakce došlo k chybě.');
-        });
+            Api.addNewTransaction(newTransactionRequest).then(response => {
+                this.props.setMessage('Zadání transakce proběhlo úspěšně.');
+            })
+                .catch(error => {
+                    this.props.setError('Při zadání transakce došlo k chybě.');
+                });
 
-        this.props.setKey();
-        this.props.setRemainder((this.props.remainder - Number(this.state.amount)) > 0 ? (this.props.remainder - Number(this.state.amount)) : 0);
-        this.props.handleClose();
+            this.props.setKey();
+            this.props.setRemainder((this.props.remainder - Number(this.state.amount)) > 0 ? (this.props.remainder - Number(this.state.amount)) : 0);
+            this.props.handleClose();
+        }
     };
 
 
@@ -97,6 +111,8 @@ class TransactionDialog extends React.Component<TransactionDialogProps, Transact
                         fullWidth
                         value={this.state.toAccountNumber}
                         onChange={this.setAccountNumber}
+                        error={this.state.accountNumberError.length > 0}
+                        helperText={this.state.accountNumberError}
                     />
 
                     <TextField
