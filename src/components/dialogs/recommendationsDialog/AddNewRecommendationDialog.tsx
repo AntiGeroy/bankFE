@@ -89,10 +89,11 @@ class AddNewRecommendationDialog extends React.Component<AddNewRecommendationDia
             Api.addNewRecommendation(recommendation).then(response => {
                 this.props.setMessage('Nové přáni bylo úspěšně přidano.');
                 this.props.setKey();
+                this.props.setRedirect();
             }).catch(error => {
                 this.props.setError('Při vložení přáni došlo k chybě');
             });
-            this.props.setRedirect();
+
         }
     };
 

@@ -45,11 +45,10 @@ class TransactionDialog extends React.Component<TransactionDialogProps, Transact
     };
 
     onSubmit = () : void => {
-        const accountNumberError : string = this.validate();
-        if(accountNumberError.length > 0){
-            this.setState({accountNumberError : accountNumberError}, () => this.forceUpdate())
-        }
-        else {
+        const accountNumberError: string = this.validate();
+        if (accountNumberError.length > 0) {
+            this.setState({accountNumberError: accountNumberError}, () => this.forceUpdate())
+        } else {
 
             const newTransactionRequest: any = {
                 fromAccountNumber: this.props.fromAccountNumber,
@@ -59,18 +58,18 @@ class TransactionDialog extends React.Component<TransactionDialogProps, Transact
             };
 
 
-        Api.addNewTransaction(newTransactionRequest).then(response => {
-            this.props.setMessage('Zadání transakce proběhlo úspěšně.');
-            this.props.setRemainder(this.props.remainder - Number(this.state.amount));
-        })
-        .catch(error => {
-            this.props.setError('Při zadání transakce došlo k chybě.');
-        });
+            Api.addNewTransaction(newTransactionRequest).then(response => {
+                this.props.setMessage('Zadání transakce proběhlo úspěšně.');
+                this.props.setRemainder(this.props.remainder - Number(this.state.amount));
+            })
+                .catch(error => {
+                    this.props.setError('Při zadání transakce došlo k chybě.');
+                });
 
-        this.props.setKey();
-        this.props.handleClose();
-    };
-
+            this.props.setKey();
+            this.props.handleClose();
+        }
+    }
 
     setTimePeriodId = (event: React.ChangeEvent<{ value: unknown }>) : void => {
         this.setState({timePeriodId : Number(event.target.value)});
@@ -91,7 +90,6 @@ class TransactionDialog extends React.Component<TransactionDialogProps, Transact
     };
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | Iterable<React.ReactNode> | React.ReactPortal | boolean | null | undefined {
-
 
         return (
             <Dialog open={this.props.open} onClose={this.props.handleClose} aria-labelledby="form-dialog-title">

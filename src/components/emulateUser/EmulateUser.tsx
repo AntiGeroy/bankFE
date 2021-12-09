@@ -33,9 +33,10 @@ class EmulateUser extends React.Component<any, any>{
                 const emulatedUsedData : UserData = response.data;
                 user.emulate = emulatedUsedData;
                 setUser(user);
-                this.setState({loading : false});
                 const {cookies} = this.props;
                 cookies.set('user', user, {maxAge : 60 * 60});
+                this.setState({loading : false});
+
             }
         ).catch(error => {
         })

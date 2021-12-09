@@ -147,9 +147,6 @@ class UserInfo extends React.Component<UserInfoProps, UserInfoState> {
     };
 
     private setUser = (user : UserData) : void => {
-
-        console.error("SETTING USER DATA : ", user);
-
         let reader = new FileReader();
         reader.onloadend = () => {
             this.setState({id : user.id,

@@ -46,9 +46,6 @@ class UserInfoCard extends React.Component<UserInfoCardProps, UserInfoCardState>
     };
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | Iterable<React.ReactNode> | React.ReactPortal | boolean | null | undefined {
-
-        console.error("RENDERING CARD, PASSED IMAGE IS : ", this.props.image);
-
         return (
             <div>
                 <Card className='clientCardInfo' key={this.props.key}>

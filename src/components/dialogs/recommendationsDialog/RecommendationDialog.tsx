@@ -47,11 +47,15 @@ class RecommendationDialog extends React.Component<DeleteRecommendationDialogPro
             } else ids[counter++] = id;
         }
         if(this.props.approve){
-            Api.approveRecommendations({ids : ids});
+            Api.approveRecommendations({ids : ids}).then(result =>{
+                this.props.setRedirect();
+            });
         } else {
-            Api.declineRecommendations({ids: ids});
+            Api.declineRecommendations({ids: ids}).then(result => {
+                this.props.setRedirect();
+            });
         }
-        this.props.setRedirect();
+
     };
 
     render(): React.ReactElement<any, string | React.JSXElementConstructor<any>> | string | number | {} | Iterable<React.ReactNode>
